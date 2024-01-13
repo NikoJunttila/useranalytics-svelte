@@ -7,7 +7,6 @@
   import {endpoint} from "$lib/js/endpoints"
 
   let formData = {
-    name: "",
     email: "",
     password: "",
   };
@@ -50,6 +49,7 @@
       notifications.warning("Passwords don't match", 2000);
       return;
     }
+    warning = ""
     try {
       const response = await fetch(`${endpoint}/v1/createuser`, {
         method: "POST",
@@ -61,32 +61,32 @@
       let data = await response.json();
       if (response.ok) {
         notifications.success("Succesfully created user! Redirecting...", 2000);
-        console.log(data);
         document.cookie = `api_key=${data.api_key}; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/`;
         console.log("API key has been set as a cookie.");
         $userProfile = {
-          name: data.name,
           email: data.email,
           apikey: data.api_key,
           loggedIn: true,
         };
         setTimeout(() => goto("/user/dashboard"), 500);
       } else {
-        notifications.warning("email already taken", 2000);
+        warning = data.error
+        notifications.warning(data.error, 10000);
         console.error("Error:", response.text, response.statusText);
       }
     } catch (error) {
-      notifications.danger(error, 3000);
+      notifications.danger(error, 10000);
       console.error("Error:", error);
     }
   }
+  let warning = ""
 </script>
 <div class="flex justify-center items-center pt-5">
   <form
     on:submit|preventDefault={handleSubmit}
     class="flex flex-col p-5 gap-3 bg-base-200 rounded w-full md:w-96"
   >
-    <label for="name">Name:</label>
+ <!--    <label for="name">Name:</label>
     <input
       class="form-input"
       type="text"
@@ -95,7 +95,7 @@
       name="name"
       placeholder="Name"
       required
-    />
+    /> -->
 
     <label for="email">Email:</label>
     <input
@@ -108,6 +108,9 @@
       placeholder="Email"
       required
     />
+    {#if warning}
+    <p class="text-red-900">{warning}</p>
+    {/if}
     {#if formData.email && !emailValid}
       <p class="text-red-900 text-xs">Please enter a valid email address.</p>
     {/if}

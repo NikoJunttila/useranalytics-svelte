@@ -50,7 +50,7 @@ let sums = sumStatsValues(dailyStats);
       }
       const check = await res.json();
       if (check == null){
-        console.log("error")
+        console.log("no stats")
         return;
       }
       dailyStats = check
@@ -65,7 +65,6 @@ let sums = sumStatsValues(dailyStats);
     }
   }
   onMount(() => {
-    console.log(data)
     getDaysData();
   });
   const script = `<script>`;
@@ -77,7 +76,6 @@ let sums = sumStatsValues(dailyStats);
 </script>
 
 <div class=" flex flex-col justify-center items-center">
-  <button on:click={() => console.log(data.compare)}>tester</button>
   <h1 class="text-2xl my-3"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
   <div class="md:stats flex gap-2 flex-col shadow">
     <div class="stat place-items-center">

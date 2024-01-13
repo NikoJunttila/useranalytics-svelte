@@ -11,7 +11,6 @@ export async function load({ cookies, params }) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log("API Response:", data); // Log the response data
       return data;
     };
 
@@ -35,9 +34,6 @@ export async function load({ cookies, params }) {
 
     const compare =  compareResponse;
     const total =  totalResponse;
-    console.log("compare:", compare);
-    console.log("total:", total);
-
     return {
       compare,
       total,

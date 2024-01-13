@@ -10,6 +10,7 @@ let user = {
 }
 
 async function login(){
+  warning = ""
     try {
       const response = await fetch(`${endpoint}/v1/login`, {
         method: "POST",
@@ -32,7 +33,8 @@ async function login(){
         };
         setTimeout(() => goto("/user/dashboard"), 500);
       } else {
-        notifications.warning("wrong password/email", 2000);
+        warning = data.error
+        notifications.warning("wrong password/email", 10000);
         console.error("Error:", response.text, response.statusText);
       }
     } catch (error) {
@@ -40,7 +42,7 @@ async function login(){
       console.error("Error:", error);
     }
 }
-
+let warning = ""
 </script>
 <div class="flex flex-col justify-center items-center gap-2">
     <form class="flex flex-col" on:submit|preventDefault={login}>
@@ -48,7 +50,10 @@ async function login(){
         <input bind:value={user.email} type="text" placeholder="email" />
         <label for="name">Password:</label>
         <input bind:value={user.password} type="password" placeholder="password" />
-    <button class="btn mt-2">Login</button>
+        {#if warning}
+          <p>{warning}</p>
+        {/if}
+        <button class="btn mt-2">Login</button>
 </form>
 <div class="flex gap-2">
     <button class="btn">forgot password?</button><button class="btn">create</button>

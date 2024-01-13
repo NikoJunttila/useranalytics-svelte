@@ -38,10 +38,7 @@
     }
   }
 
-  let follow =  {
-    domain_name:"",
-    domain_id: ""
-  }
+let domain_id = ""
 
 async function getFollow(){
   try {
@@ -51,7 +48,7 @@ async function getFollow(){
         headers: {
           Authorization: "ApiKey " + $userProfile.apikey,
         },
-        body: JSON.stringify(follow)
+        body: JSON.stringify({domain_id: domain_id})
       };
       const res = await fetch(url, options);
       if (res.ok) {
@@ -71,7 +68,6 @@ async function getFollow(){
 </style>
 <section class="flex flex-col justify-center items-center">
   <div class="text-center">
-    <p>{$userProfile.name}</p>
     <p>{$userProfile.email}</p>
     <p class="mb-4">Added domains</p>
     {#if data.domains}
@@ -95,10 +91,10 @@ async function getFollow(){
     </form>
     <p class="mt-5 mb-2 text-xl">Follow someone elses domain <span class="text-base">(You need to get ID from them.)</span></p>
     <form on:submit|preventDefault={getFollow}>
-      <label for="name">Name:</label>
-      <input class="rounded-md" bind:value={follow.domain_name} type="text" placeholder="name" />
+<!--       <label for="name">Name:</label>
+      <input class="rounded-md" bind:value={follow.domain_name} type="text" placeholder="name" /> -->
       <label for="name">ID:</label>
-      <input class="rounded-md" bind:value={follow.domain_id} type="text" placeholder="domain id" />
+      <input class="rounded-md" bind:value={domain_id} type="text" placeholder="domain id" />
       <button class="btn">Follow</button>
     </form>
   </div>

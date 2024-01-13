@@ -43,7 +43,6 @@
   function removeApiKeyCookie() {
     document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     $userProfile = {
-          name: "",
           email: "",
           apikey: "",
           loggedIn: false,
