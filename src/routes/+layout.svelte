@@ -7,12 +7,13 @@
   import { goto } from "$app/navigation";
   import { getCookies } from "$lib/js/getCookies";
   import { themeChange } from 'theme-change'
+  import {endpoint} from "$lib/js/endpoints"
 
   async function fetchUser() {
     const myCookie = getCookies("api_key");
     if (myCookie) {
       try {
-        const url = "http://localhost:8000/v1/users";
+        const url =`${endpoint}/v1/users`;
         const options = {
           method: "GET",
           headers: {

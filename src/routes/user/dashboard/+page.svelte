@@ -5,6 +5,7 @@
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
+  import {endpoint} from "$lib/js/endpoints"
 
   let domainData = {
     name: "",
@@ -13,7 +14,7 @@
   let domains;
   async function newDomain() {
     try {
-      const url = "http://localhost:8000/v1/domains";
+      const url = `${endpoint}/v1/domains`;
       const options = {
         method: "POST",
         headers: {
@@ -39,7 +40,7 @@
   }
   async function getDomains() {
     try {
-      const url = "http://localhost:8000/v1/feed_follows";
+      const url = `${endpoint}/v1/feed_follows`;
       const options = {
         method: "GET",
         headers: {
@@ -66,7 +67,7 @@
 
 async function getFollow(){
   try {
-      const url = "http://localhost:8000/v1/feed_follows";
+      const url = `${endpoint}/v1/feed_follows`;
       const options = {
         method: "POST",
         headers: {

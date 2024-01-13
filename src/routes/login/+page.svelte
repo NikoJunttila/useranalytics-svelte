@@ -3,6 +3,7 @@
 import { userProfile } from "$lib/stores/userStore";
 import { notifications } from "$lib/stores/notifications";
 import { goto } from "$app/navigation";
+import {endpoint} from "$lib/js/endpoints"
 let user = {
     email: "",
     password: ""
@@ -10,7 +11,7 @@ let user = {
 
 async function login(){
     try {
-      const response = await fetch("http://localhost:8000/v1/login", {
+      const response = await fetch(`${endpoint}/v1/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

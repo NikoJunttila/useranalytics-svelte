@@ -3,6 +3,8 @@
   import { userProfile } from "$lib/stores/userStore";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
+  import {endpoint} from "$lib/js/endpoints"
+
   // @ts-ignore
   let slug;
   $: {
@@ -25,6 +27,7 @@
       Count: 0,
     },
   ];
+  
   function sumStatsValues(statsArray) {
   // Initialize variables to hold the sums
   let sumDomainCount = 0;
@@ -45,9 +48,44 @@
   };
 }
 let sums = sumStatsValues(dailyStats);
+let compare = {
+    total: 0,
+    unique: 0
+  }
+async function getCompare() {
+    try {
+      const res = await fetch(`${endpoint}/v1/compare`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // @ts-ignore
+        body: JSON.stringify({ domain_id: slug }),
+      });
+      console.log(res)
+      if (!res.ok) {
+        console.log("error");
+        return;
+      }
+      const data = await res.json();
+      if (data == null){
+        console.log("data null")
+        return;
+      }
+      console.log(data)
+      compare.total = data.total
+      compare.unique = data.unique
+      return
+    } catch (err) {
+      // Handle any unexpected errors here.
+      console.error(err);
+      // @ts-ignore
+      return error(500, "Internal Server Error");
+    }
+  }
   async function getData() {
     try {
-      const res = await fetch("http://localhost:8000/v1/domain", {
+      const res = await fetch(`${endpoint}/v1/domain`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,20 +112,17 @@ let sums = sumStatsValues(dailyStats);
         id: data.ID,
       };
     } catch (err) {
-      // Handle any unexpected errors here.
       console.error(err);
-      // @ts-ignore
       return error(500, "Internal Server Error");
     }
   }
   async function getDaysData() {
     try {
-      const res = await fetch(`http://localhost:8000/v1/visits/${fetchValue}`, {
+      const res = await fetch(`${endpoint}/v1/visits/${fetchValue}`, {
         method: "POST",
         body: JSON.stringify({ domain_id: slug }),
       });
       if (!res.ok) {
-        console.log("error");
         return;
       }
       const check = await res.json();
@@ -109,6 +144,7 @@ let sums = sumStatsValues(dailyStats);
   onMount(() => {
     getData();
     getDaysData();
+    getCompare()
   });
   const script = `<script>`;
   const scriptEnd = `<\/script>`;
@@ -138,7 +174,11 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat-title">Total Page Views</div>
       <div class="stat-value">{domainData.totalVisits}</div>
-      <div class="stat-desc">change from last month: 21%</div>
+      {#if compare.total > 0}
+      <div class="stat-desc text-green-500">change from last month: {compare.total}%</div>
+      {:else if compare.total < 0}
+      <div class="stat-desc text-red-600">change from last month: {compare.total}%</div>
+      {/if}
     </div>
     <div class="stat place-items-center">
       <div class="stat-figure text-secondary">
@@ -157,26 +197,11 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat-title">Total Unique visits:</div>
       <div class="stat-value">{domainData.totalUnique}</div>
-      <div class="stat-desc">change from last month: 21%</div>
-    </div>
-    <div class="stat place-items-center">
-      <div class="stat-figure text-secondary">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-8 h-8 stroke-current"
-          ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          /></svg
-        >
-      </div>
-      <div class="stat-title">Avg visit duration:</div>
-      <div class="stat-value">{domainData.avgTime}</div>
-      <div class="stat-desc">change from last month: 21%</div>
+      {#if compare.unique > 0}
+      <div class="stat-desc text-green-500">change from last month: {compare.unique}%</div>
+      {:else if compare.unique < 0}
+      <div class="stat-desc text-red-600">change from last month: {compare.unique}%</div>
+      {/if}
     </div>
   </div>
   <select
@@ -202,15 +227,15 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">Avg visit duration:</div>
-        <div class="stat-value">{sums.sumAvgVisitDuration}</div>
+        <div class="stat-value">{sums.sumAvgVisitDuration}s</div>
       </div>
     </div>
     <p>Visits coming from:</p>
-    {#if dailyStats.length > 1}
+    {#if dailyStats.length > 0}
     <div class="md:stats flex flex-col shadow">
       {#each dailyStats as from}
         <div class="stat">
-          <div class="stat-title">{from.Visitfrom}</div>
+          <div class="stat-title text-center">{from.Visitfrom}</div>
           <div class="stat-value">{from.Count}</div>
         </div>
       {/each}

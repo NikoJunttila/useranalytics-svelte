@@ -4,6 +4,8 @@
   import { beforeUpdate } from "svelte";
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
+  import {endpoint} from "$lib/js/endpoints"
+
   let formData = {
     name: "",
     email: "",
@@ -49,7 +51,7 @@
       return;
     }
     try {
-      const response = await fetch("http://localhost:8000/v1/createuser", {
+      const response = await fetch(`${endpoint}/v1/createuser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
