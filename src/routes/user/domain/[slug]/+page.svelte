@@ -1,23 +1,14 @@
 <script>
   // @ts-nocheck
-  import { userProfile } from "$lib/stores/userStore";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
   import {endpoint} from "$lib/js/endpoints"
-
+  export let data;
   // @ts-ignore
   let slug;
   $: {
     slug = $page.params.slug;
   }
-  let domainData = {
-    name: "",
-    url: "",
-    totalVisits: 0,
-    totalUnique: 0,
-    avgTime: 0,
-    id: "",
-  };
   let dailyStats = [
     {
       DomainCount: 0,
@@ -48,74 +39,6 @@
   };
 }
 let sums = sumStatsValues(dailyStats);
-let compare = {
-    total: 0,
-    unique: 0
-  }
-async function getCompare() {
-    try {
-      const res = await fetch(`${endpoint}/v1/compare`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        // @ts-ignore
-        body: JSON.stringify({ domain_id: slug }),
-      });
-      console.log(res)
-      if (!res.ok) {
-        console.log("error");
-        return;
-      }
-      const data = await res.json();
-      if (data == null){
-        console.log("data null")
-        return;
-      }
-      console.log(data)
-      compare.total = data.total
-      compare.unique = data.unique
-      return
-    } catch (err) {
-      // Handle any unexpected errors here.
-      console.error(err);
-      // @ts-ignore
-      return error(500, "Internal Server Error");
-    }
-  }
-  async function getData() {
-    try {
-      const res = await fetch(`${endpoint}/v1/domain`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "ApiKey " + $userProfile.apikey,
-        },
-        // @ts-ignore
-        body: JSON.stringify({ domain_id: slug }),
-      });
-      if (!res.ok) {
-        console.log("error");
-        return;
-      }
-      const data = await res.json();
-      if (data == null){
-        console.log("data null")
-        return;
-      }
-      domainData = {
-        name: data.Name,
-        url: data.Url,
-        totalVisits: data.TotalVisits,
-        totalUnique: data.TotalUnique,
-        avgTime: data.TotalTime,
-        id: data.ID,
-      };
-    } catch (err) {
-      console.error(err);
-      return error(500, "Internal Server Error");
-    }
-  }
   async function getDaysData() {
     try {
       const res = await fetch(`${endpoint}/v1/visits/${fetchValue}`, {
@@ -142,9 +65,8 @@ async function getCompare() {
     }
   }
   onMount(() => {
-    getData();
+    console.log(data)
     getDaysData();
-    getCompare()
   });
   const script = `<script>`;
   const scriptEnd = `<\/script>`;
@@ -155,7 +77,8 @@ async function getCompare() {
 </script>
 
 <div class=" flex flex-col justify-center items-center">
-  <h1 class="text-2xl my-3"><a class="text-blue-700 " href={domainData.url}>{domainData.name}</a> stats</h1>
+  <button on:click={() => console.log(data.compare)}>tester</button>
+  <h1 class="text-2xl my-3"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
   <div class="md:stats flex gap-2 flex-col shadow">
     <div class="stat place-items-center">
       <div class="stat-figure text-secondary">
@@ -173,11 +96,11 @@ async function getCompare() {
         >
       </div>
       <div class="stat-title">Total Page Views</div>
-      <div class="stat-value">{domainData.totalVisits}</div>
-      {#if compare.total > 0}
-      <div class="stat-desc text-green-500">change from last month: {compare.total}%</div>
-      {:else if compare.total < 0}
-      <div class="stat-desc text-red-600">change from last month: {compare.total}%</div>
+      <div class="stat-value">{data.total.TotalVisits}</div>
+      {#if data.compare.total > 0}
+      <div class="stat-desc text-green-500">change from last month: {data.compare.total}%</div>
+      {:else if data.compare.total < 0}
+      <div class="stat-desc text-red-600">change from last month: {data.compare.total}%</div>
       {/if}
     </div>
     <div class="stat place-items-center">
@@ -196,11 +119,11 @@ async function getCompare() {
         >
       </div>
       <div class="stat-title">Total Unique visits:</div>
-      <div class="stat-value">{domainData.totalUnique}</div>
-      {#if compare.unique > 0}
-      <div class="stat-desc text-green-500">change from last month: {compare.unique}%</div>
-      {:else if compare.unique < 0}
-      <div class="stat-desc text-red-600">change from last month: {compare.unique}%</div>
+      <div class="stat-value">{data.total.TotalUnique}</div>
+      {#if data.compare.unique > 0}
+      <div class="stat-desc text-green-500">change from last month: {data.compare.unique}%</div>
+      {:else if data.compare.unique < 0}
+      <div class="stat-desc text-red-600">change from last month: {data.compare.unique}%</div>
       {/if}
     </div>
   </div>
@@ -252,7 +175,7 @@ async function getCompare() {
       <span class="text-blue-800">{script}</span><span class="text-red-600"
         >var</span
       >
-      dID="{domainData.id}"<span class="text-blue-800">{scriptEnd}</span>
+      dID="{data.total.ID}"<span class="text-blue-800">{scriptEnd}</span>
     </p>
     <p>
       <span class="text-blue-800">{script2}</span>

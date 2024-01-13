@@ -1,17 +1,16 @@
 <script>
 // @ts-nocheck
-
   import { notifications } from "$lib/stores/notifications";
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
   import {endpoint} from "$lib/js/endpoints"
+  export let data;
 
   let domainData = {
     name: "",
     url: "",
   };
-  let domains;
+  
   async function newDomain() {
     try {
       const url = `${endpoint}/v1/domains`;
@@ -38,27 +37,6 @@
       notifications.danger(error, 3000);
     }
   }
-  async function getDomains() {
-    try {
-      const url = `${endpoint}/v1/feed_follows`;
-      const options = {
-        method: "GET",
-        headers: {
-          Authorization: "ApiKey " + $userProfile.apikey,
-        }
-      };
-      const res = await fetch(url, options);
-      if (res.ok) {
-        domains = await res.json();
-      }
-    } catch (error) {
-      console.error(error);
-      notifications.danger(error, 3000);
-    }
-  }
-  onMount(() => {
-    getDomains()
-  })
 
   let follow =  {
     domain_name:"",
@@ -96,9 +74,9 @@ async function getFollow(){
     <p>{$userProfile.name}</p>
     <p>{$userProfile.email}</p>
     <p class="mb-4">Added domains</p>
-    {#if domains}
+    {#if data.domains}
     <div class="flex flex-wrap gap-2">
-      {#each domains as domain}
+      {#each data.domains as domain}
       <a href="/user/domain/{domain.DomainID}">
         <div class="card h-32 w-32 text-2xl bg-base-300 grid place-items-center hover:bg-base-200">
           <h2>{domain.DomainName}</h2>
