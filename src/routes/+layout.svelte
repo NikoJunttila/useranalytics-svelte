@@ -5,40 +5,21 @@
   import { onMount } from "svelte";
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
-  import { getCookies } from "$lib/js/getCookies";
   import { themeChange } from 'theme-change'
-  import {endpoint} from "$lib/js/endpoints"
 
-  async function fetchUser() {
-    const myCookie = getCookies("api_key");
-    if (myCookie) {
-      try {
-        const url =`${endpoint}/v1/users`;
-        const options = {
-          method: "GET",
-          headers: {
-            Authorization: "ApiKey " + myCookie,
-          },
-        };
-        const res = await fetch(url, options);
-        if (res.ok) {
-          let data = await res.json();
-          $userProfile = {
-            name: data.name,
-            email: data.email,
-            apikey: data.api_key,
-            loggedIn: true,
-          };
-          goto("/user/dashboard")
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-  }
+  export let data
   onMount(() => {
-    fetchUser();
+   // fetchUser();
+   console.log(data.userProfile)
+   if (data.userProfile){
+     $userProfile = {
+       email: data.userProfile.email,
+       apikey: data.userProfile.api_key,
+       loggedIn: data.userProfile.loggedIn,
+      };
+    }
     themeChange(false)
+    if ($userProfile.loggedIn) goto("/user/dashboard")
   });
   function removeApiKeyCookie() {
     document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

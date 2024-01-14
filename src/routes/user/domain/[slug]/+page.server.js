@@ -1,14 +1,19 @@
 // @ts-nocheck
 import { endpoint } from "$lib/js/endpoints";
+//import { error } from "@sveltejs/kit";
 
 /** @type {import('./$types').PageServerLoad} */
-export async function load({ cookies, params }) {
+export async function load({ cookies, params, setHeaders }) {
   try {
     const apiKey = cookies.get("api_key");
 
     const checkResponse = async (response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const cacheControl = response.headers.get("Cache-Control")
+      if (cacheControl) {
+        setHeaders({ "Cache-Control": cacheControl })
       }
       const data = await response.json();
       return data;
@@ -31,7 +36,6 @@ export async function load({ cookies, params }) {
         body: JSON.stringify({ domain_id: params.slug }),
       }).then(checkResponse),
     ]);
-
     const compare =  compareResponse;
     const total =  totalResponse;
     return {
