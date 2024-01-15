@@ -24,6 +24,7 @@
       <p>Introducing Trustlytics: Your Privacy-Respecting, Open-Source User Analytics Solution
         We understand the importance of safeguarding user privacy while gaining valuable insights. 
         That's why we've created a cutting-edge, open-source user analytics software designed with your privacy in mind.</p>
+        <a class="text-blue-600" href="/example">Example on how it works here</a>
     </main>
     <button class="btn mt-5">
       <a href="#info">
