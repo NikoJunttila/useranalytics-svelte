@@ -9,8 +9,6 @@
 
   export let data
   onMount(() => {
-   // fetchUser();
-   console.log(data.userProfile)
    if (data.userProfile){
      $userProfile = {
        email: data.userProfile.email,
@@ -19,7 +17,6 @@
       };
     }
     themeChange(false)
-    if ($userProfile.loggedIn) goto("/user/dashboard")
   });
   function removeApiKeyCookie() {
     document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
