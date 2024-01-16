@@ -12,7 +12,7 @@
    if (data.userProfile){
      $userProfile = {
        email: data.userProfile.email,
-       apikey: data.userProfile.api_key,
+       apikey: data.userProfile.apikey,
        loggedIn: data.userProfile.loggedIn,
       };
     }

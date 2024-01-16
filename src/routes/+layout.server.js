@@ -19,7 +19,7 @@ export async function load({ fetch, cookies }) {
           // For now, let's assume you want to share it across pages
           return {
             email: data.email,
-            apikey: data.api_key,
+            apikey: myCookie,
             loggedIn: true,
           };
         }
