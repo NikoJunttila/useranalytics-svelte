@@ -95,10 +95,10 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat-title">Total Page Views</div>
       <div class="stat-value">{data.total.TotalVisits}</div>
-      {#if data.compare.total > 0}
-      <div class="stat-desc text-green-500">change from last month: {data.compare.total}%</div>
-      {:else if data.compare.total < 0}
-      <div class="stat-desc text-red-600">change from last month: {data.compare.total}%</div>
+      {#if data.total.total > 0}
+      <div class="stat-desc text-green-500">change from last month: {data.total.total}%</div>
+      {:else if data.total.total < 0}
+      <div class="stat-desc text-red-600">change from last month: {data.total.total}%</div>
       {/if}
     </div>
     <div class="stat place-items-center">
@@ -118,10 +118,10 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat-title">Total Unique visits:</div>
       <div class="stat-value">{data.total.TotalUnique}</div>
-      {#if data.compare.unique > 0}
-      <div class="stat-desc text-green-500">change from last month: {data.compare.unique}%</div>
-      {:else if data.compare.unique < 0}
-      <div class="stat-desc text-red-600">change from last month: {data.compare.unique}%</div>
+      {#if data.total.unique > 0}
+      <div class="stat-desc text-green-500">change from last month: {data.total.unique}%</div>
+      {:else if data.total.unique < 0}
+      <div class="stat-desc text-red-600">change from last month: {data.total.unique}%</div>
       {/if}
     </div>
   </div>
