@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { page } from "$app/stores";
   import {endpoint} from "$lib/js/endpoints"
+  import { notifications } from "$lib/stores/notifications";
   export let data;
   // @ts-ignore
   let slug;
@@ -46,6 +47,7 @@ let sums = sumStatsValues(dailyStats);
         body: JSON.stringify({ domain_id: slug }),
       });
       if (!res.ok) {
+        notifications.danger(res.status, 3000);
         return;
       }
       const check = await res.json();
@@ -59,9 +61,7 @@ let sums = sumStatsValues(dailyStats);
       }); 
       sums = sumStatsValues(dailyStats);
     } catch (err) {
-      // Handle any unexpected errors here.
-      console.error(err);
-      // @ts-ignore
+      notifications.danger(err, 3000);
     }
   }
   onMount(() => {

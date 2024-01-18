@@ -2,8 +2,8 @@
   // @ts-nocheck
   import { onMount } from "svelte";
   import {endpoint, exampleID} from "$lib/js/endpoints"
+  import { notifications } from "$lib/stores/notifications";
   export let data;
-  // @ts-ignore
   let dailyStats = [
     {
       DomainCount: 0,
@@ -41,6 +41,7 @@ let sums = sumStatsValues(dailyStats);
         body: JSON.stringify({ domain_id: exampleID }),
       });
       if (!res.ok) {
+        notifications.danger("error fetching data", 3000);
         return;
       }
       const check = await res.json();
@@ -54,9 +55,7 @@ let sums = sumStatsValues(dailyStats);
       }); 
       sums = sumStatsValues(dailyStats);
     } catch (err) {
-      // Handle any unexpected errors here.
-      console.error(err);
-      // @ts-ignore
+      notifications.danger(err, 3000);
     }
   }
   onMount(() => {

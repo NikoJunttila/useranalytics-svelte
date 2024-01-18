@@ -28,8 +28,6 @@
           "Succesfully created domain. Redirecting...",
           2000
         );
-  /*       setTimeout(() => {
-        }, 1500); */
         goto(`/user/domain/${data.ID}`);
       }else {
         notifications.danger(data.error, 3000);
