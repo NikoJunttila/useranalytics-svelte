@@ -142,7 +142,7 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">Avg visit duration:</div>
-        <div class="stat-value">{sums.sumAvgVisitDuration}s</div>
+        <div class="stat-value">{Math.floor(sums.sumAvgVisitDuration)}s</div>
       </div>
     </div>
     <p>Visits coming from:</p>
