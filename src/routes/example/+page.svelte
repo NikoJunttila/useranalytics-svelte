@@ -120,12 +120,14 @@ let sums = sumStatsValues(dailyStats);
     </div>
   </div>
   <select
+    name="fetch"
+    id="fetchdays"
     class="my-5 bg-inherit outline outline-2 outline-green-700 rounded-md"
     bind:value={fetchValue}
     on:change={getDaysData}
   >
     {#each days as day}
-      <option value={day}>
+      <option name="select" value={day}>
         Last {day} days
       </option>
     {/each}

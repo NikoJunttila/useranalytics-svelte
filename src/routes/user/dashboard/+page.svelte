@@ -71,7 +71,6 @@ async function getFollow(){
 <section class="flex flex-col justify-center items-center">
   <div class="text-center">
     <p>{$userProfile.email}</p>
-    <button on:click={() => console.log($userProfile)}>tester</button>
     <p class="mb-4" >Added domains</p>
     {#if data.domains}
     <div class="flex flex-wrap gap-2">

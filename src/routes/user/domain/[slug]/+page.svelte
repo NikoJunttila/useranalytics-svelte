@@ -126,6 +126,7 @@ let sums = sumStatsValues(dailyStats);
     </div>
   </div>
   <select
+    name="fetch"
     class="my-5 bg-inherit outline outline-2 outline-green-700 rounded-md"
     bind:value={fetchValue}
     on:change={getDaysData}

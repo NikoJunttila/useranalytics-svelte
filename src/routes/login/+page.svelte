@@ -47,9 +47,9 @@
   <div class="flex flex-col justify-center items-center gap-2">
       <form class="flex flex-col" on:submit|preventDefault={login}>
           <label for="email">Email:</label>
-          <input name="email" bind:value={user.email} type="text" placeholder="email" />
+          <input name="email" id="email" bind:value={user.email} type="text" placeholder="email" />
           <label for="password">Password:</label>
-          <input name="password" bind:value={user.password} type="password" placeholder="password" />
+          <input name="password" id="password" bind:value={user.password} type="password" placeholder="password" />
           {#if warning}
             <p class="text-red-900">{warning}</p>
           {/if}
