@@ -4,6 +4,7 @@
   import {endpoint, exampleID} from "$lib/js/endpoints"
   import { notifications } from "$lib/stores/notifications";
   import { loading } from "$lib/stores/loader.js";
+  import Htmlcode from "$lib/Htmlcode.svelte";
   export let data;
   let dailyStats = [
     {
@@ -66,10 +67,6 @@ let sums = sumStatsValues(dailyStats);
     loading.set(false)
     getDaysData();
   });
-  const script = `<script>`;
-  const scriptEnd = `<\/script>`;
-  const script2 = "<script";
-  const close = ">";
   let days = [7, 30, 90];
   let fetchValue = 30;
 </script>
@@ -164,24 +161,5 @@ let sums = sumStatsValues(dailyStats);
     </div>
     {/if}
   {/if}
-  <p class="text-center">
-    Add this script to your root index file. <sub>
-      (index.html/app.html) common ones.</sub
-    >
-  </p>
-  <div class="text-[0.6rem] sm:text-xs bg-base-200 m-3 sm:p-7 rounded">
-    <p>
-      <span class="text-blue-800">{script}</span><span class="text-red-600"
-        >var</span
-      >
-      dID="{data.total.ID}"<span class="text-blue-800">{scriptEnd}</span>
-    </p>
-    <p>
-      <span class="text-blue-800">{script2}</span>
-      <span class="text-blue-400">async src</span
-      >="https://cdn.jsdelivr.net/gh/NikoJunttila/userAnalytics@main/javascript/tracker.js"
-      type="text/javascript"{close}<span class="text-blue-800">{scriptEnd}</span
-      >
-    </p>
-  </div>
+<Htmlcode id=data.total.ID />
 </div>
