@@ -4,6 +4,7 @@
   import { notifications } from "$lib/stores/notifications";
   import { goto } from "$app/navigation";
   import {endpoint} from "$lib/js/endpoints"
+  import { loading } from "$lib/stores/loader.js";
   let user = {
       email: "",
       password: ""
@@ -12,6 +13,7 @@
   async function login(){
     warning = ""
       try {
+        loading.set(true)
         const response = await fetch(`${endpoint}/v1/login`, {
           method: "POST",
           headers: {
@@ -20,6 +22,7 @@
           body: JSON.stringify(user),
         });
         let data = await response.json();
+        loading.set(false)
         if (response.ok) {
           notifications.success("Succesfully loggedIn", 2000);
           console.log(data);
@@ -38,8 +41,8 @@
           console.error("Error:", response.text, response.statusText);
         }
       } catch (error) {
-        notifications.danger(error, 3000);
-        console.error("Error:", error);
+        loading.set(false)
+        notifications.danger(error, 3000);        
       }
   }
   let warning = ""

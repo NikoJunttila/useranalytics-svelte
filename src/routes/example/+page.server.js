@@ -1,11 +1,11 @@
 // @ts-nocheck
-import { endpoint } from "$lib/js/endpoints";
+import { endpoint, exampleID } from "$lib/js/endpoints";
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load({ setHeaders }) {
   try {
     const res = await
-      fetch(`${endpoint}/v1/example`, {
+      fetch(`${endpoint}/v1/example/${exampleID}`, {
         method: "GET"
       })
     if (!res.ok) {

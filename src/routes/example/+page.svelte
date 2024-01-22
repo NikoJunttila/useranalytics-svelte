@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import {endpoint, exampleID} from "$lib/js/endpoints"
   import { notifications } from "$lib/stores/notifications";
+  import { loading } from "$lib/stores/loader.js";
   export let data;
   let dailyStats = [
     {
@@ -36,6 +37,7 @@
 let sums = sumStatsValues(dailyStats);
   async function getDaysData() {
     try {
+      loading.set(true)
       const res = await fetch(`${endpoint}/v1/visits/${fetchValue}`, {
         method: "POST",
         body: JSON.stringify({ domain_id: exampleID }),
@@ -45,6 +47,7 @@ let sums = sumStatsValues(dailyStats);
         return;
       }
       const check = await res.json();
+      loading.set(false)
       if (check == null){
         console.log("no stats")
         return;
@@ -56,9 +59,11 @@ let sums = sumStatsValues(dailyStats);
       sums = sumStatsValues(dailyStats);
     } catch (err) {
       notifications.danger(err, 3000);
+      loading.set(false)
     }
   }
   onMount(() => {
+    loading.set(false)
     getDaysData();
   });
   const script = `<script>`;
@@ -122,7 +127,7 @@ let sums = sumStatsValues(dailyStats);
   <select
     name="fetch"
     id="fetchdays"
-    class="my-5 bg-inherit outline outline-2 outline-green-700 rounded-md"
+    class="my-5 bg-neutral outline outline-2 outline-accent focus:outline-accent-focus rounded-md"
     bind:value={fetchValue}
     on:change={getDaysData}
   >

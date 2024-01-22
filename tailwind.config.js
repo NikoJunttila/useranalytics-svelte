@@ -9,13 +9,13 @@ export default {
   daisyui: {
     // themes: ["bumblebee", "coffee","dark"],
 themes: [
-      "coffee","dark","bumblebee",
+      "coffee","dark","bumblebee","valentine",
        {
           mytheme: {
 "primary": "#c026d3",
 "secondary": "#3b82f6",
 "accent": "#fda4af",
-"neutral": "#ffffff",
+"neutral": "#f5d0fe",
 "base-100": "#fae8ff",
 "info": "#ffffff",
 "success": "#00ffff",

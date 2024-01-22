@@ -4,6 +4,7 @@
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
   import {endpoint} from "$lib/js/endpoints"
+  import { loading } from "$lib/stores/loader.js";
   export let data;
 
   let domainData = {
@@ -13,6 +14,7 @@
   
   async function newDomain() {
     try {
+      loading.set(true)
       const url = `${endpoint}/v1/domains`;
       const options = {
         method: "POST",
@@ -23,6 +25,7 @@
       };
       const res = await fetch(url, options);
       let data = await res.json();
+      loading.set(false)
       if (res.ok) {
         notifications.success(
           "Succesfully created domain. Redirecting...",
@@ -34,6 +37,7 @@
       }
     } catch (error) {
       console.error(error);
+      loading.set(false)
       notifications.danger(error, 3000);
     }
   }
@@ -42,6 +46,7 @@ let domain_id = ""
 
 async function getFollow(){
   try {
+      loading.set(true)
       const url = `${endpoint}/v1/feed_follows`;
       const options = {
         method: "POST",
@@ -52,12 +57,14 @@ async function getFollow(){
       };
       const res = await fetch(url, options);
       const newFollow = await res.json();
+      loading.set(false)
       if (res.ok) {
         goto(`/user/domain/${newFollow.DomainID}`);
       }else {
         notifications.danger(newFollow.error, 3000);
       }
     } catch (error) {
+      loading.set(false)
       console.error(error);
       notifications.danger(error, 3000);
     }

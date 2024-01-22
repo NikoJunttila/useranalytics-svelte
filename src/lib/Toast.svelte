@@ -32,7 +32,7 @@
 <style>
     .notifications {
         position: fixed;
-        top: 10vh;
+        top: 10px;
         left: 0;
         right: 0;
         z-index: 9999;
