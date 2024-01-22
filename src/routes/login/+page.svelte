@@ -56,6 +56,6 @@
           <button class="btn mt-2">Login</button>
   </form>
   <div class="flex gap-2">
-      <button class="btn">forgot password?</button><button class="btn">create</button>
+      <button class="btn">forgot password?</button> <button class="btn"><a href="/create">create user</a></button>
   </div>
   </div>

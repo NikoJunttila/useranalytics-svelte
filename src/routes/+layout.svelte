@@ -5,9 +5,8 @@
   import { onMount } from "svelte";
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
-  import { themeChange } from 'theme-change'
-
   export let data
+  import { notifications } from "$lib/stores/notifications";
   onMount(() => {
    if (data.userProfile){
      $userProfile = {
@@ -16,7 +15,6 @@
        loggedIn: data.userProfile.loggedIn,
       };
     }
-    themeChange(false)
   });
   function removeApiKeyCookie() {
     document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -27,6 +25,12 @@
         };
     goto("/")
   }
+  let selectedTheme = "mytheme";
+  function changeTheme(event) {
+    selectedTheme = event.target.value;
+    const body = document.querySelector("html");
+    body.setAttribute("data-theme", selectedTheme);
+  }
 </script>
 
 <div class="min-h-screen flex flex-col">
@@ -36,15 +40,77 @@
   <a href="/" class="ml-5">Logo</a>
   <a href="/user/dashboard" class="ml-auto">dashboard</a>
   <button class="btn" on:click={removeApiKeyCookie}>Logout</button>
-  <button class="mr-5" data-toggle-theme="dark,light" data-act-class="ACTIVECLASS"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5l1.43 1.43L4.93 20.5L3.5 19.07L19.07 3.5m-6.18 2.43L11.41 5L9.97 6l.42-1.7L9 3.24l1.75-.12l.58-1.65L12 3.1l1.73.03l-1.35 1.13l.51 1.67m-3.3 3.61l-1.16-.73l-1.12.78l.34-1.32l-1.09-.83l1.36-.09l.45-1.29l.51 1.27l1.36.03l-1.05.87l.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58l2.77-1.15l-.24 3.35l-2.53-2.2m4.33-2.7l1.15-2.77l2.2 2.54l-3.35.23m1.15-4.96l-1.14-2.78l3.34.24l-2.2 2.54M9.63 18.93l2.77 1.15l-2.53 2.19l-.24-3.34Z"/></svg></button>
 </header>
   {:else}
 <header
 class="fixed flex gap-4 py-4 h-[50px] w-full items-center bg-base-200 z-10">
 <a class="ml-5" href="/">Logo</a>
-<a href="/create" class="ml-auto">Create user</a>
-<a class="btn" href="/login">Login</a>
-<button class="mr-5" data-toggle-theme="dark,light" data-act-class="ACTIVECLASS"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5l1.43 1.43L4.93 20.5L3.5 19.07L19.07 3.5m-6.18 2.43L11.41 5L9.97 6l.42-1.7L9 3.24l1.75-.12l.58-1.65L12 3.1l1.73.03l-1.35 1.13l.51 1.67m-3.3 3.61l-1.16-.73l-1.12.78l.34-1.32l-1.09-.83l1.36-.09l.45-1.29l.51 1.27l1.36.03l-1.05.87l.4 1.31M19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58l2.77-1.15l-.24 3.35l-2.53-2.2m4.33-2.7l1.15-2.77l2.2 2.54l-3.35.23m1.15-4.96l-1.14-2.78l3.34.24l-2.2 2.54M9.63 18.93l2.77 1.15l-2.53 2.19l-.24-3.34Z"/></svg></button>
+<div class="ml-auto dropdown dropdown-hover">
+    <div tabindex="0" role="button" class="btn m-1">
+    Theme
+    <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
+  </div>
+  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl bg-base-300 rounded-box w-52">
+    <li>
+      <input
+        type="radio"
+        name="theme-dropdown1"
+        id="theme-dropdown1"
+        class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+        aria-label="Default"
+        on:change={changeTheme}
+        value="mytheme"
+        checked={selectedTheme === 'mytheme'}
+        />
+        <label for="theme-dropdown1" class="theme-controller btn btn-sm btn-block btn-ghost justify-start">Mytheme</label>
+
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="theme-dropdown2"
+        id="theme-dropdown2"
+        class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+        aria-label="coffee"
+        on:change={changeTheme}
+        value="coffee"
+        checked={selectedTheme === 'coffee'}
+      />
+    <label for="theme-dropdown2" class="theme-controller btn btn-sm btn-block btn-ghost justify-start">Coffee</label>
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="theme-dropdown3"
+        class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+        aria-label="dark"
+        id="theme-dropdown3"
+        on:change={changeTheme}
+        value="dark"
+        checked={selectedTheme === 'dark'}
+      />
+      <label for="theme-dropdown3" class="theme-controller btn btn-sm btn-block btn-ghost justify-start">Dark</label>
+
+    </li>
+    <li>
+      <input
+        type="radio"
+        name="theme-dropdown4"
+        class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+        aria-label="bumblebee"
+        id="theme-dropdown4"
+        on:change={changeTheme}
+        value="bumblebee"
+        checked={selectedTheme === 'bumblebee'}
+      />
+      <label for="theme-dropdown4" class="theme-controller btn btn-sm btn-block btn-ghost justify-start">bumblebee</label>
+
+    </li>
+  </ul>
+</div><a href="/create" class="mx-1">Create user</a>
+<a class="btn mx-1" href="/login">Login</a>
+
 </header>
   {/if}
   <main class="pt-[50px]">
@@ -52,6 +118,8 @@ class="fixed flex gap-4 py-4 h-[50px] w-full items-center bg-base-200 z-10">
   </main>
   <Toast />
 </div>
-
 <style>
+ input[type="radio"] {
+    display: none;
+}
 </style>

@@ -18,11 +18,12 @@
     {#each $notifications as notification (notification.id)}
         <div
             animate:flip
-            class="toast"
+            class="alert toast"
+            role="alert"
             style="background: {themes[notification.type]};"
-            transition:fly={{ y: 30 }}
+            in:fly={{ delay:250, y: 30 }}
         >
-            <div class="content">{notification.message}</div>
+            <span class="content">{notification.message}</span>
             {#if notification.icon}<i class={notification.icon} />{/if}
         </div>
     {/each}
@@ -31,11 +32,9 @@
 <style>
     .notifications {
         position: fixed;
-        top: 10px;
+        top: 10vh;
         left: 0;
         right: 0;
-        margin: 0 auto;
-        padding: 0;
         z-index: 9999;
         display: flex;
         flex-direction: column;
@@ -43,16 +42,13 @@
         align-items: center;
         pointer-events: none;
     }
-
     .toast {
         flex: 0 0 auto;
-        margin-bottom: 10px;
+        position: relative;
+        max-width: 1250px;
     }
-
-    .content {
-        padding: 10px;
-        display: block;
+    .content{
         color: white;
-        font-weight: 500;
+        mix-blend-mode: difference;
     }
 </style>

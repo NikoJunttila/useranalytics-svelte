@@ -72,11 +72,9 @@
       } else {
         warning = data.error
         notifications.warning(data.error, 10000);
-        console.error("Error:", response.text, response.statusText);
       }
     } catch (error) {
       notifications.danger(error, 10000);
-      console.error("Error:", error);
     }
   }
   let warning = ""
