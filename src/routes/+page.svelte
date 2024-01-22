@@ -2,12 +2,12 @@
   // @ts-ignore
   import Footer from "$lib/Footer.svelte";
   import LandingPage from "$lib/LandingPage.svelte";
-  
+  import Htmlcode from "$lib/Htmlcode.svelte";
 
-  const script = `<script>`;
+/*   const script = `<script>`;
   const scriptEnd = `<\/script>`;
   const script2 ="<script"
-  const close = ">"
+  const close = ">" */
 
 </script>
 <style>
@@ -49,14 +49,7 @@
   </section>
 </div>
 <div class="flex  flex-col items-center pb-5">
-  <div id="getStarted" class="mx-2">
-      <h1>To get started just add a small script to your index HTML head tag and start tracking user stats.</h1>
-      <p>dID is unique to every domain so you need to login first to generate your own code that links your domains with that ID</p>
-  </div>
-  <div class="text-[0.6rem] sm:text-xs bg-base-200  m-3  sm:p-7 rounded">
-      <p><span class="text-blue-800">{script}</span><span class="text-red-600">var</span> dID = "22b567c5-2736-436d-81f7-edab07857f02"<span class="text-blue-800">{scriptEnd}</span></p>
-      <p><span class="text-blue-800">{script2}</span> <span class="text-blue-400">async src</span>="https://cdn.jsdelivr.net/gh/NikoJunttila/userAnalytics@main/javascript/tracker.js" type="text/javascript"{close}<span class="text-blue-800">{scriptEnd}</span></p>
-  </div>
+  <Htmlcode id="e325ccdb-284b-4f74-bfcd-c014c300a3c9" />
   <div>
       <a href="/create"><button class="btn">Create account</button></a>
       <a href="/login"><button class="btn">Login</button></a>
