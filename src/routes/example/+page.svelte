@@ -161,5 +161,5 @@ let sums = sumStatsValues(dailyStats);
     </div>
     {/if}
   {/if}
-<Htmlcode id=data.total.ID />
+<Htmlcode id={data.total.ID} />
 </div>
