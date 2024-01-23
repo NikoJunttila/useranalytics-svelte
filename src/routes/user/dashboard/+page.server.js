@@ -18,7 +18,7 @@ export async function load({cookies , setHeaders }) {
 			setHeaders({ "Cache-Control": cacheControl })
 		}
     if (!res.ok){
-      throw error(res.status, "could not fetch domains")
+      error(res.status, "could not fetch domains");
     }
     const domains = await res.json()
     return {
