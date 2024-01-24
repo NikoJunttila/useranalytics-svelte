@@ -15,8 +15,6 @@ export async function load({ fetch, cookies }) {
         const res = await fetch(url, options);
         if (res.ok) {
           let data = await res.json();
-          // You might want to handle the user data appropriately
-          // For now, let's assume you want to share it across pages
           return {
             email: data.email,
             apikey: myCookie,
@@ -27,11 +25,8 @@ export async function load({ fetch, cookies }) {
         console.error(error);
       }
     }
-    // Return a default value or handle the case when no user is fetched
     return null;
   }
-
-  // Fetch user data and assign it to a variable that will be available in pages
   const userProfile = await fetchUser();
 
   return {

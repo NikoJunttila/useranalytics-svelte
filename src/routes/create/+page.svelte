@@ -96,7 +96,9 @@
     /> -->
 
     <label for="email">Email:</label>
+    <!-- svelte-ignore a11y-autofocus -->
     <input
+      autofocus
       class="form-input"
       type="email"
       on:input={validateEmail}

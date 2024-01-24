@@ -70,10 +70,14 @@ let sums = sumStatsValues(dailyStats);
   let days = [7, 30, 90];
   let fetchValue = 30;
 </script>
-
+<style>
+  .bg{
+    background-color: hsl(var(--b3) / var(--tw-bg-opacity)) !important;
+  }
+</style>
 <div class=" flex flex-col justify-center items-center">
   <h1 class="text-2xl my-3"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
-  <div class="md:stats flex gap-2 flex-col shadow">
+  <div class="md:stats bg flex gap-2 flex-col shadow">
     <div class="stat place-items-center">
       <div class="stat-figure text-secondary">
         <svg
@@ -135,7 +139,7 @@ let sums = sumStatsValues(dailyStats);
     {/each}
   </select>
   {#if dailyStats}
-    <div class="md:stats flex gap-2 flex-col shadow">
+    <div class="md:stats bg flex gap-2 flex-col shadow">
       <div class="stat place-items-center">
         <div class="stat-title">Page Views</div>
         <div class="stat-value">{sums.sumDomainCount}</div>
@@ -151,7 +155,7 @@ let sums = sumStatsValues(dailyStats);
     </div>
     <p>Visits coming from:</p>
     {#if dailyStats.length > 0}
-    <div class="md:stats flex flex-col shadow">
+    <div class="md:stats bg flex flex-col shadow">
       {#each dailyStats as from}
         <div class="stat">
           <div class="stat-title text-center">{from.Visitfrom}</div>

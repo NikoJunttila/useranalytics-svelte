@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="mytheme">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width" />
-		%sveltekit.head%
-		<!-- User Analytics script  -->
-		<script>var dID = "e325ccdb-284b-4f74-bfcd-c014c300a3c9"</script>
-		<script async src="https://cdn.jsdelivr.net/gh/NikoJunttila/userAnalytics@main/javascript/tracker.js" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="title" content="analytics" />
+    <meta
+      name="description"
+      content="Easy to use free open source user analytics service"
+    />
+    <meta name="keywords" content="analytics,opensource,free,easy" />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="English" />
+    <meta name="author" content="Niko Junttila" />
+    %sveltekit.head%
+    <!-- User Analytics script  -->
+    <script>
+      var dID = "e325ccdb-284b-4f74-bfcd-c014c300a3c9";
+    </script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/gh/NikoJunttila/userAnalytics@main/javascript/tracker.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
 </html>

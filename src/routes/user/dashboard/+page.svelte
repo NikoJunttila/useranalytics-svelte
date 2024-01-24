@@ -93,9 +93,9 @@ async function getFollow(){
     <p class="text-xl my-2">Create new tracking link and start analysing user stats.</p>
     <form on:submit|preventDefault={newDomain}>
       <label for="name">Name:</label>
-      <input name="name" class="rounded-md" bind:value={domainData.name} type="text" placeholder="name" />
+      <input name="name" id="name" class="rounded-md" bind:value={domainData.name} type="text" placeholder="name" />
       <label for="url">Url:</label>
-      <input name="url" class="rounded-md" bind:value={domainData.url} type="text" placeholder="url" />
+      <input name="url" id="url" class="rounded-md" bind:value={domainData.url} type="text" placeholder="url" />
       <button class="btn">Create</button>
     </form>
     <p class="mt-5 mb-2 text-xl">Follow someone elses domain <span class="text-base">(You need to get ID from them.)</span></p>
@@ -103,7 +103,7 @@ async function getFollow(){
 <!--       <label for="name">Name:</label>
       <input class="rounded-md" bind:value={follow.domain_name} type="text" placeholder="name" /> -->
       <label for="id">ID:</label>
-      <input name="id" class="rounded-md" bind:value={domain_id} type="text" placeholder="domain id" />
+      <input id="id" name="id" class="rounded-md" bind:value={domain_id} type="text" placeholder="domain id" />
       <button class="btn">Follow</button>
     </form>
   </div>

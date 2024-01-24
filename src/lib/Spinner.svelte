@@ -4,7 +4,7 @@
 
 <div class="wrapper" transition:fade>
 	<h1>
-		Loading data...
+		Loading...
     <br>
 		<div class="loader"/>
 	</h1>

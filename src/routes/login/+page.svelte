@@ -25,9 +25,7 @@
         loading.set(false)
         if (response.ok) {
           notifications.success("Succesfully loggedIn", 2000);
-          console.log(data);
           document.cookie = `api_key=${data.api_key}; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/`;
-          console.log("API key has been set as a cookie.");
           $userProfile = {
             name: data.name,
             email: data.email,
@@ -50,7 +48,8 @@
   <div class="flex flex-col justify-center items-center gap-2">
       <form class="flex flex-col" on:submit|preventDefault={login}>
           <label for="email">Email:</label>
-          <input name="email" id="email" bind:value={user.email} type="text" placeholder="email" />
+          <!-- svelte-ignore a11y-autofocus -->
+          <input autofocus autocomplete="email" name="email" id="email" bind:value={user.email} type="text" placeholder="email" />
           <label for="password">Password:</label>
           <input name="password" id="password" bind:value={user.password} type="password" placeholder="password" />
           {#if warning}

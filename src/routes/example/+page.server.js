@@ -21,6 +21,6 @@ export async function load({ setHeaders }) {
     };
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error; // rethrow the error or handle it appropriately
+    throw error;
   }
 }
