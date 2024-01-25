@@ -62,7 +62,6 @@
       if (response.ok) {
         notifications.success("Succesfully created user! Redirecting...", 2000);
         document.cookie = `api_key=${data.api_key}; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/`;
-        console.log("API key has been set as a cookie.");
         $userProfile = {
           email: data.email,
           apikey: data.api_key,

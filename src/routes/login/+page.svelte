@@ -9,7 +9,24 @@
       email: "",
       password: ""
   }
-  
+  let forgotEmail = ""
+  async function reset(){
+    try {
+      const response = await fetch(`${endpoint}/v1/forgotPass`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({email:forgotEmail}),
+        });
+        if (response.ok) {
+          notifications.success("Email sent! Go to your email to reset password", 5000);
+          forgotEmail = "";
+        }
+    } catch (err) {
+      notifications.danger(error, 4000); 
+    }
+  }
   async function login(){
     warning = ""
       try {
@@ -49,15 +66,31 @@
       <form class="flex flex-col" on:submit|preventDefault={login}>
           <label for="email">Email:</label>
           <!-- svelte-ignore a11y-autofocus -->
-          <input autofocus autocomplete="email" name="email" id="email" bind:value={user.email} type="text" placeholder="email" />
+          <input class="input" autofocus autocomplete="email" name="email" id="email" bind:value={user.email} type="text" placeholder="email" />
           <label for="password">Password:</label>
-          <input name="password" id="password" bind:value={user.password} type="password" placeholder="password" />
+          <input class="input" name="password" id="password" bind:value={user.password} type="password" placeholder="password" />
           {#if warning}
             <p class="text-red-900">{warning}</p>
           {/if}
           <button class="btn mt-2">Login</button>
   </form>
   <div class="flex gap-2">
-      <button class="btn">forgot password?</button> <button class="btn"><a href="/create">create user</a></button>
+    <button class="btn" onclick="my_modal_2.showModal()">Forgot password?</button>
+      <button class="btn"><a href="/create">create user</a></button>
   </div>
   </div>
+  <dialog id="my_modal_2" class="modal">
+    <div class="modal-box">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+      </form>
+      <h3 class="font-bold text-lg text-center">Password reset</h3>
+      <form class="text-center" on:submit|preventDefault={reset}>
+        <p>Sends password reset link to your email.</p>
+        <label for="forgotEmail" class="py-4 mr-2">Email:</label>
+        <input class="my-3 input bg-base-300" type="text" bind:value={forgotEmail} name="forgotEmail" id="forgotEmail">
+        <br>
+        <button class="btn" type="submit">Send reset link</button>
+      </form>
+    </div>
+  </dialog>
