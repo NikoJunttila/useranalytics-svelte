@@ -83,22 +83,11 @@
     on:submit|preventDefault={handleSubmit}
     class="flex flex-col p-5 gap-3 bg-base-200 rounded w-full md:w-96"
   >
- <!--    <label for="name">Name:</label>
-    <input
-      class="form-input"
-      type="text"
-      id="name"
-      bind:value={formData.name}
-      name="name"
-      placeholder="Name"
-      required
-    /> -->
-
     <label for="email">Email:</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input
       autofocus
-      class="form-input"
+      class="input"
       type="email"
       on:input={validateEmail}
       id="email"
@@ -115,7 +104,7 @@
     {/if}
     <label for="password">Password:</label>
     <input
-      class="form-input"
+      class="input"
       on:input={validatePassword}
       type="password"
       id="password"
@@ -140,7 +129,7 @@
     {/if}
     <label for="confirm_password">Confirm Password:</label>
     <input
-      class="form-input"
+      class="input"
       on:input={validatePassword}
       type="password"
       id="confirm_password"

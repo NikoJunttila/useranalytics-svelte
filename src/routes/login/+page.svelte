@@ -63,7 +63,7 @@
   let warning = ""
   </script>
   <div class="flex flex-col justify-center items-center gap-2">
-      <form class="flex flex-col" on:submit|preventDefault={login}>
+      <form class="flex mt-5 gap-2 p-4 flex-col bg-base-200" on:submit|preventDefault={login}>
           <label for="email">Email:</label>
           <!-- svelte-ignore a11y-autofocus -->
           <input class="input" autofocus autocomplete="email" name="email" id="email" bind:value={user.email} type="text" placeholder="email" />
@@ -72,7 +72,7 @@
           {#if warning}
             <p class="text-red-900">{warning}</p>
           {/if}
-          <button class="btn mt-2">Login</button>
+          <button class="btn bg-neutral mt-2">Login</button>
   </form>
   <div class="flex gap-2">
     <button class="btn" onclick="my_modal_2.showModal()">Forgot password?</button>

@@ -15,7 +15,7 @@ const obj = [{name:"mytheme",color:"#f9e6ff"},{name:"coffee",color:"#211720"},{n
     <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
   </div>
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-  <ul tabindex="0" class="dropdown-content bg-base-100 z-[1] p-2 shadow-2xl  rounded-box w-52">
+  <ul tabindex="0" class="dropdown-content bg-base-300 z-[1] p-3 shadow-2xl  rounded-box w-52">
     {#each obj as theme, index}
     <li>
       <input
