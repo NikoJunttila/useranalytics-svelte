@@ -3,12 +3,6 @@
   import Footer from "$lib/Footer.svelte";
   import LandingPage from "$lib/LandingPage.svelte";
   import Htmlcode from "$lib/Htmlcode.svelte";
-
-/*   const script = `<script>`;
-  const scriptEnd = `<\/script>`;
-  const script2 ="<script"
-  const close = ">" */
-
 </script>
 <style>
     section{

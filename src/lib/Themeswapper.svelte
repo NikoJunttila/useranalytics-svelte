@@ -29,7 +29,7 @@ const obj = [{name:"mytheme",color:"#f9e6ff"},{name:"coffee",color:"#211720"},{n
       />
       <label
         for="theme-dropdown{index}"
-        class="btn btn-sm btn-block btn-ghost justify-start hover:opacity-70"
+        class="btn text-center btn-sm btn-block btn-ghost  hover:opacity-70"
         style="background-color: {theme.color};"
         >{theme.name}</label
       >

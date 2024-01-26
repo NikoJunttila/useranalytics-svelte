@@ -26,7 +26,7 @@ goto("/example")
   }
   </style>
   
-  <section class="w-full h-screen relative flex flex-col items-center justify-center">
+  <section class="w-full h-screen  relative flex flex-col items-center justify-center">
     <main class="w-[300px] h-[300px] z-[2] grid place-items-center p-4 bg-base-100 rounded">
       <h1 class="text-3xl">Trustlytics</h1>
       <p>Introducing Trustlytics: Your Privacy-Respecting, Open-Source User Analytics Solution
