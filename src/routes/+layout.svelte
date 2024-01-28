@@ -59,10 +59,9 @@ beforeUpdate(() => {
 <header
 class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex gap-4 h-[50px] w-full items-center  z-10">
 <a class="ml-5" href="/">Logo</a>
-<button on:click={() => console.log(y)}>test</button>
 <Themeswapper />
 <a href="/create" class="btn">Create user</a>
-<a class="btn mx-1" href="/login">Login</a>
+<a class="btn mr-5" href="/login">Login</a>
 </header>
   {/if}
   <main class="pt-16">
