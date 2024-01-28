@@ -1,11 +1,16 @@
 <script>
   // @ts-nocheck
   import { onMount } from "svelte";
-  import {endpoint, exampleID} from "$lib/js/endpoints"
+  import {endpoint} from "$lib/js/endpoints"
+  import { page } from "$app/stores";
   import { notifications } from "$lib/stores/notifications";
   import { loading } from "$lib/stores/loader.js";
   import Htmlcode from "$lib/Htmlcode.svelte";
   export let data;
+  let slug;
+  $: {
+    slug = $page.params.slug;
+  }
   let dailyStats = [
     {
       DomainCount: 0,

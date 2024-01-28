@@ -53,7 +53,7 @@ beforeUpdate(() => {
   <a href="/" class="ml-5">Logo</a>
   <Themeswapper />
   <a class="btn" href="/user/dashboard">dashboard</a>
-  <button class="btn" on:click={removeApiKeyCookie}>Logout</button>
+  <button class="btn mr-5" on:click={removeApiKeyCookie}>Logout</button>
 </header>
   {:else}
 <header
