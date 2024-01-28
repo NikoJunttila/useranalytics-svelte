@@ -1,16 +1,11 @@
 <script>
   // @ts-nocheck
   import { onMount } from "svelte";
-  import { page } from "$app/stores";
-  import {endpoint} from "$lib/js/endpoints"
+  import {endpoint, exampleID} from "$lib/js/endpoints"
   import { notifications } from "$lib/stores/notifications";
+  import { loading } from "$lib/stores/loader.js";
   import Htmlcode from "$lib/Htmlcode.svelte";
   export let data;
-  // @ts-ignore
-  let slug;
-  $: {
-    slug = $page.params.slug;
-  }
   let dailyStats = [
     {
       DomainCount: 0,
@@ -20,6 +15,9 @@
       Count: 0,
     },
   ];
+  let os;
+  let browser;
+  let device;
   
   function sumStatsValues(statsArray) {
   // Initialize variables to hold the sums
@@ -43,44 +41,68 @@
 let sums = sumStatsValues(dailyStats);
   async function getDaysData() {
     try {
+      loading.set(true)
       const res = await fetch(`${endpoint}/v1/visits/${fetchValue}`, {
         method: "POST",
         body: JSON.stringify({ domain_id: slug }),
       });
       if (!res.ok) {
-        notifications.danger(res.status, 3000);
+        notifications.danger("error fetching data", 3000);
         return;
       }
       const check = await res.json();
+      loading.set(false)
       if (check == null){
         console.log("no stats")
         return;
       }
-      dailyStats = check
+      console.log(check)
+      os = check.os;
+      os.sort(function (a, b) {
+        return b.Count - a.Count;
+      });
+      device = check.device;
+      device.sort(function (a, b) {
+        return b.Count - a.Count;
+      }); 
+      browser = check.browser;
+      browser.sort(function (a, b) {
+        return b.Count - a.Count;
+      }); 
+      dailyStats = check.original
        dailyStats.sort(function (a, b) {
         return b.Count - a.Count;
       }); 
       sums = sumStatsValues(dailyStats);
     } catch (err) {
       notifications.danger(err, 3000);
+      loading.set(false)
     }
   }
   onMount(() => {
+    loading.set(false)
     getDaysData();
   });
   let days = [7, 30, 90];
   let fetchValue = 30;
 </script>
 <style>
-  .bg{
-    background-color: hsl(var(--b3) / var(--tw-bg-opacity)) !important;
-  }
-</style>
 
+  div.stat-value{
+    text-align: center;
+  }
+  p{
+    margin: 5px 0;
+  }
+  div.shadow{
+    border-radius: var(--rounded-box, 1rem/* 16px */);
+  }
+  
+</style>
 <div class=" flex flex-col justify-center items-center">
   <h1 class="text-2xl my-3"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
-  <div class="md:stats bg flex gap-2 flex-col shadow">
-    <div class="stat place-items-center">
+  <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
+    <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
       <div class="stat-figure text-secondary">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -129,44 +151,72 @@ let sums = sumStatsValues(dailyStats);
   </div>
   <select
     name="fetch"
+    id="fetchdays"
     class="my-5 bg-neutral outline outline-2 outline-accent focus:outline-accent-focus rounded-md"
     bind:value={fetchValue}
     on:change={getDaysData}
   >
     {#each days as day}
-      <option value={day}>
+      <option name="select" value={day}>
         Last {day} days
       </option>
     {/each}
   </select>
   {#if dailyStats}
-    <div class="md:stats bg flex gap-2 flex-col shadow">
-      <div class="stat place-items-center">
+    <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
+      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
         <div class="stat-title">Page Views</div>
         <div class="stat-value">{sums.sumDomainCount}</div>
       </div>
-      <div class="stat place-items-center">
+      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
         <div class="stat-title">Unique visits:</div>
         <div class="stat-value">{sums.sumNewVisitorCount}</div>
       </div>
-      <div class="stat place-items-center">
+      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
         <div class="stat-title">Avg visit duration:</div>
         <div class="stat-value">{Math.floor(sums.sumAvgVisitDuration)}s</div>
       </div>
     </div>
     <p>Visits coming from:</p>
     {#if dailyStats.length > 0}
-    <div class="md:stats bg flex flex-col shadow">
+    <div class="md:stats !bg-base-300 flex flex-col shadow">
       {#each dailyStats as from}
-        <div class="stat">
+        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
           <div class="stat-title text-center">{from.Visitfrom}</div>
           <div class="stat-value">{from.Count}</div>
         </div>
       {/each}
     </div>
     {/if}
+    {#if os}
+    <p>Browsers</p>
+    <div class="md:stats !bg-base-300 flex flex-col shadow">
+      {#each browser as b}
+        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+          <div class="stat-title text-center">{b.ColumnValue}</div>
+          <div class="stat-value">{b.Count}</div>
+        </div>
+      {/each}
+    </div>
+    <p>Operating systems</p>
+    <div class="md:stats !bg-base-300 flex flex-col shadow">
+      {#each os as os1}
+        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+          <div class="stat-title text-center">{os1.ColumnValue}</div>
+          <div class="stat-value">{os1.Count}</div>
+        </div>
+      {/each}
+    </div>
+    <p>Devices</p>
+    <div class="md:stats  !bg-base-300 flex flex-col shadow">
+      {#each device as dev}
+        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+          <div class="stat-title text-center">{dev.ColumnValue}</div>
+          <div class="stat-value">{dev.Count}</div>
+        </div>
+      {/each}
+    </div>
+    {/if}
   {/if}
-  <br>
 <Htmlcode id={data.total.ID} />
 </div>
-
