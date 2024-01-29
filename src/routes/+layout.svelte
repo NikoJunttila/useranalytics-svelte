@@ -8,6 +8,8 @@
   import Themeswapper from "$lib/Themeswapper.svelte";
 	import { loader,loading } from "$lib/stores/loader";
   import { fly } from 'svelte/transition'
+  import Footer from "$lib/Footer.svelte";
+
 
   export let data
 beforeUpdate(() => {
@@ -37,31 +39,60 @@ beforeUpdate(() => {
   }
   let y = 0;
 </script>
-<style>
-  .faded{
-    background-color: hsl(var(--b3) / 0.7)
-  }
-  header{
-        transition: 0.7s;
-    }
-</style>
+
 
 <div class="min-h-screen flex flex-col" use:loader={loading}>
   {#if $userProfile.loggedIn}
   <header
   class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex gap-4 h-[50px] w-full items-center  z-10">
-  <a href="/" class="ml-5">Logo</a>
+  <a class="btn btn-ghost text-xl ml-5" href="/">Logo</a>
   <Themeswapper />
-  <a class="btn" href="/user/dashboard">dashboard</a>
-  <button class="btn mr-5" on:click={removeApiKeyCookie}>Logout</button>
+  <div class="hidden sm:block">
+    <a href="/docs" class="btn">Docs</a>
+    <a class="btn" href="/user/dashboard">dashboard</a>
+    <button class="btn mr-5" on:click={removeApiKeyCookie}>Logout</button>
+  </div>
+  <div class="dropdown dropdown-bottom dropdown-end sm:hidden mr-8 ">
+    <div tabindex="0" id="hamburger" role="button" class="btn m-1 w-[60px] ">  
+      <div class="hamburger-lines">
+      <span class="line line1"></span>
+      <span class="line line2"></span>
+      <span class="line line3"></span>
+  </div>  
+  </div>
+    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow text-center bg-base-100 rounded-box w-52">
+      <li><a class="btn" href="/user/dashboard">dashboard</a></li>
+      <a href="/docs" class="btn">Docs</a>
+      <li><button class="btn" on:click={removeApiKeyCookie}>Logout</button></li>
+    </ul>
+  </div>
 </header>
   {:else}
 <header
 class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex gap-4 h-[50px] w-full items-center  z-10">
-<a class="ml-5" href="/">Logo</a>
+<a class="btn btn-ghost text-xl ml-5" href="/">Logo</a>
 <Themeswapper />
-<a href="/create" class="btn">Create user</a>
-<a class="btn mr-5" href="/login">Login</a>
+<div class="hidden sm:block">
+  <a href="/create" class="btn">Create user</a>
+  <a href="/docs" class="btn">Docs</a>
+  <a class="btn mr-5" href="/login">Login</a>
+</div>
+<div class="dropdown dropdown-bottom dropdown-end sm:hidden mr-8 ">
+  <div tabindex="0" id="hamburger" role="button" class="btn m-1 w-[60px] ">  
+    <div class="hamburger-lines">
+    <span class="line line1"></span>
+    <span class="line line2"></span>
+    <span class="line line3"></span>
+</div>  
+</div>
+  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+  <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+    <li><a href="/login">Sign in</a></li>
+    <li><a href="/create">Create user</a></li>
+    <li><a href="/docs">Docs</a></li>
+  </ul>
+</div>
 </header>
   {/if}
   <main class="pt-16">
@@ -76,4 +107,62 @@ class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex
   </main>
   <Toast />
 </div>
+<Footer></Footer>
 <svelte:window bind:scrollY={y} />
+
+
+<style>
+  .faded{
+    background-color: hsl(var(--b3) / 0.7)
+  }
+  header{
+        transition: 0.7s;
+    }
+    .hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  top: 17px;
+  left: 20px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: #0e2431;
+}
+
+.line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.line2 {
+  transition: transform 0.2s ease-in-out;
+}
+
+.line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+
+#hamburger:focus > div .line1 {
+  transform: rotate(45deg);
+}
+
+#hamburger:focus > div .line2 {
+  transform: scaleY(0);
+}
+
+#hamburger:focus > div .line3 {
+  transform: rotate(-45deg);
+}
+
+</style>

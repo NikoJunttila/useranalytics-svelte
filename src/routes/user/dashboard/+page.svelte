@@ -131,9 +131,9 @@
         {#each data.domains as domain}
           <a href="/user/domain/{domain.DomainID}">
             <div
-              class="card h-32 w-32 text-2xl bg-base-300 grid place-items-center hover:bg-base-200"
+              class="card overflow-hidden p-2 h-32 w-32 text-xl bg-base-300 grid place-items-center hover:bg-base-200"
             >
-              <h2>{domain.DomainName}</h2>
+              {domain.DomainName}
             </div>
           </a>
         {/each}
@@ -189,4 +189,5 @@
   p {
     font-size: 1.2rem;
   }
+
 </style>

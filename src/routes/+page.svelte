@@ -1,6 +1,5 @@
 <script>
   // @ts-ignore
-  import Footer from "$lib/Footer.svelte";
   import LandingPage from "$lib/LandingPage.svelte";
   import Htmlcode from "$lib/Htmlcode.svelte";
 </script>
@@ -49,4 +48,3 @@
       <a href="/login"><button class="btn">Login</button></a>
   </div>
 </div>
-<Footer></Footer>

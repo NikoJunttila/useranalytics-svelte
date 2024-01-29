@@ -52,7 +52,7 @@
           setTimeout(() => goto("/user/dashboard"), 500);
         } else {
           warning = data.error
-          notifications.warning("wrong password/email", 10000);
+          notifications.warning("wrong password/email", 5000);
           console.error("Error:", response.text, response.statusText);
         }
       } catch (error) {
