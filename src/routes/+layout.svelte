@@ -2,7 +2,7 @@
   // @ts-nocheck
   import "../app.css";
   import Toast from "$lib/Toast.svelte";
-  import { onMount,beforeUpdate } from "svelte";
+  import { onMount } from "svelte";
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
   import Themeswapper from "$lib/Themeswapper.svelte";
@@ -10,15 +10,12 @@
   import { fly } from 'svelte/transition'
   import Footer from "$lib/Footer.svelte";
 
-
   export let data
-beforeUpdate(() => {
-  const theme = localStorage.getItem("myTheme");
+  onMount(() => {
+    const theme = localStorage.getItem("myTheme");
   if (theme) {
     document.querySelector("html").setAttribute("data-theme", theme);
   }
-});
-  onMount(() => {
     if (data.userProfile){
      $userProfile = {
        email: data.userProfile.email,

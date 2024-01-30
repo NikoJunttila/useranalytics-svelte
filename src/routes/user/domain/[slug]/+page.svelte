@@ -105,7 +105,8 @@ let sums = sumStatsValues(dailyStats);
   
 </style>
 <div class=" flex flex-col justify-center items-center">
-  <h1 class="text-2xl my-3"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
+  <h1 class="text-2xl my-2"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
+  <p class="mb-2">Domain tracking link: {data.total.ID}</p>
   <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
     <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
       <div class="stat-figure text-secondary">

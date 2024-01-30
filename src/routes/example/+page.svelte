@@ -56,7 +56,6 @@ let sums = sumStatsValues(dailyStats);
         console.log("no stats")
         return;
       }
-      console.log(check)
       os = check.os;
       os.sort(function (a, b) {
         return b.Count - a.Count;
