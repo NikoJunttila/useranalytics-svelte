@@ -9,7 +9,7 @@
 	import { loader,loading } from "$lib/stores/loader";
   import { fly } from 'svelte/transition'
   import Footer from "$lib/Footer.svelte";
-
+  import EntranceReveal from "$lib/EntranceReveal.svelte";
   export let data
   onMount(() => {
     const theme = localStorage.getItem("myTheme");
@@ -39,9 +39,10 @@
 
 
 <div class="min-h-screen flex flex-col overflow-hidden" use:loader={loading}>
+  <EntranceReveal />
   {#if $userProfile.loggedIn}
   <header
-  class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-base-300 fixed flex gap-4 h-[50px] w-full items-center  z-20">
+  class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4 h-[50px] w-full items-center  z-20">
   <a class="btn btn-ghost text-xl ml-5" href="/">Logo</a>
   <Themeswapper />
   <div class="hidden sm:block">
@@ -67,7 +68,7 @@
 </header>
   {:else}
 <header
-class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-base-300 fixed flex gap-4  w-full items-center  z-10">
+class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4  w-full items-center  z-10">
 <a class="btn btn-ghost text-xl ml-5" href="/">Logo</a>
 <Themeswapper />
 <div class="hidden sm:block">
@@ -105,6 +106,7 @@ class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-base-300 fixed flex gap-4  w-full i
   <Toast />
   <Footer></Footer>
 </div>
+
 <svelte:window bind:scrollY={y} />
 
 
