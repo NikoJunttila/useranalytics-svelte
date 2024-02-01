@@ -57,11 +57,10 @@ let sums = sumStatsValues(dailyStats);
       }
       const check = await res.json();
       loading.set(false)
-      if (check == null){
-        console.log("no stats")
-        return;
+      if (!check.os){
+        notifications.warning("no stats yet for this page", 3000);
+        return
       }
-      console.log(check)
       os = check.os;
       os.sort(function (a, b) {
         return b.Count - a.Count;
@@ -105,8 +104,9 @@ let sums = sumStatsValues(dailyStats);
   
 </style>
 <div class=" flex flex-col justify-center items-center">
-  <h1 class="text-2xl my-2"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
-  <p class="mb-2">Domain tracking link: {data.total.ID}</p>
+  <a href="/user/dashboard" class="btn mt-2">Back</a>
+  <h1 class="text-2xl my-1"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
+  <p class="mb-2">Domain analytics id: {data.total.ID}</p>
   <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
     <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
       <div class="stat-figure text-secondary">

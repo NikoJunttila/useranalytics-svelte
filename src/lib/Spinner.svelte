@@ -22,9 +22,8 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		color: hsl(var(--a) / var(--tw-bg-opacity));
+		color: hsl((--a) / var(--tw-varbg-opacity));
      background-color: hsl(var(--n) / 0.2); 
-  /*   background: rgb(255 255 255 / .9); */
     pointer-events: none;
 	}
 .loader {

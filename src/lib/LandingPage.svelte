@@ -1,9 +1,3 @@
-<script>
-import { goto } from "$app/navigation";
-import { loading } from "$lib/stores/loader.js";
-
-</script>
-
 <style>
   section {
     --s: 100px;

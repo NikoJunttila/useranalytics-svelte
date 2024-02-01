@@ -38,10 +38,10 @@
 </script>
 
 
-<div class="min-h-screen flex flex-col" use:loader={loading}>
+<div class="min-h-screen flex flex-col overflow-hidden" use:loader={loading}>
   {#if $userProfile.loggedIn}
   <header
-  class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex gap-4 h-[50px] w-full items-center  z-10">
+  class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-base-300 fixed flex gap-4 h-[50px] w-full items-center  z-20">
   <a class="btn btn-ghost text-xl ml-5" href="/">Logo</a>
   <Themeswapper />
   <div class="hidden sm:block">
@@ -67,7 +67,7 @@
 </header>
   {:else}
 <header
-class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex gap-4 h-[50px] w-full items-center  z-10">
+class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-base-300 fixed flex gap-4  w-full items-center  z-10">
 <a class="btn btn-ghost text-xl ml-5" href="/">Logo</a>
 <Themeswapper />
 <div class="hidden sm:block">
@@ -92,28 +92,25 @@ class="{y > 50 ? "bg-base-300 text-base py-2" : "faded text-lg py-8"} fixed flex
 </div>
 </header>
   {/if}
-  <main class="pt-16">
+  <div class="pt-[75px] min-h-screen">
     {#key data.url}
-    <div class=""
+    <div
       in:fly={{ x: -200, duration: 300, delay: 300 }}
       out:fly={{ x: 200, duration: 300 }}
     >
       <slot />
     </div>
   {/key}
-  </main>
+  </div>
   <Toast />
+  <Footer></Footer>
 </div>
-<Footer></Footer>
 <svelte:window bind:scrollY={y} />
 
 
 <style>
-  .faded{
-    background-color: hsl(var(--b3) / 0.7)
-  }
   header{
-        transition: 0.7s;
+        transition: 1s;
     }
     .hamburger-lines {
   display: block;
