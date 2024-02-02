@@ -102,8 +102,8 @@ let sums = sumStatsValues(dailyStats);
   
 </style>
 <div class=" flex flex-col justify-center items-center">
-  <a href="/user/dashboard" class="btn mt-2">Back</a>
-  <h1 class="text-2xl my-1"><a class="text-blue-700 " href={data.total.Url}>{data.total.Name}</a> stats</h1>
+  <a href="/" class="btn mt-2">Back</a>
+  <h1 class="text-2xl my-1"><a class="text-blue-700" href={data.total.Url} target="_blank">{data.total.Name}</a> stats</h1>
   <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
     <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
       <div class="stat-figure text-secondary">

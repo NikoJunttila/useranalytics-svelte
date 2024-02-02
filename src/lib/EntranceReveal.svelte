@@ -2,34 +2,31 @@
   import { onMount } from "svelte";
   
   onMount(() => {
-    const numRows = 5;
-    const numCols = 10;
+    setTimeout(() =>{
+      animate.remove()
+    }, 2600)
 
-    for (let row = 0; row < numRows; row++) {
-      for (let col = 0; col < numCols; col++) {
-        const emptyElement = document.createElement("div");
-        emptyElement.style.setProperty(
-          "--animation-order",
-          (row * numCols + col + 1).toString()
-        );
-        animate.appendChild(emptyElement);
-      }
-    }
   });
   /**
    * @type {HTMLDivElement}
    */
   let animate;
+
+  let loopCount = 50;
+  let dummyArray = Array.from({ length: loopCount }, (_, index) => index);
 </script>
 
 <div
   bind:this={animate}
   id="entrance"
-  class="pointer-events-none grid grid-cols-10 grid-rows-5 h-full w-full z-50 fixed"
-></div>
+  class="pointer-events-none grid grid-cols-10 grid-rows-5 h-full w-full z-50 fixed">
+{#each dummyArray as index (index)}
+  <div style="--animation-order: {index}"></div>
+{/each}
+</div>
 
 <style>
-  :global(#entrance > div) {
+  #entrance > div {
     animation-name: slide-out-bottom;
     animation-duration: 350ms;
     animation-delay: calc(var(--animation-order) * 50ms);
