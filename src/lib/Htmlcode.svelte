@@ -8,7 +8,7 @@
    */
    export let id
 </script>
-    <div id="getStarted" class="text-[1.2rem] mx-2">
+    <div id="getStarted" class="text-[1.2rem] mt-4 mx-4">
         <h1>To get started just add a small script to your index HTML head tag and start tracking user stats.</h1>
         <p>dID is unique to every domain so you need to login first to generate your own code that links your domains with that ID</p>
     </div>

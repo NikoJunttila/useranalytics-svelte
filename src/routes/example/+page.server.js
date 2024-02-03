@@ -17,7 +17,9 @@ export async function load({ setHeaders }) {
     }
     const total = await res.json();
     return {
-      total
+      streamed : {
+        total: total
+      }
     };
   } catch (error) {
     console.error("Error fetching data:", error);

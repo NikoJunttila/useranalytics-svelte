@@ -10,13 +10,9 @@
   import { fly } from 'svelte/transition'
   import Footer from "$lib/Footer.svelte";
   import EntranceReveal from "$lib/EntranceReveal.svelte";
-  import logo from '$lib/assets/Logo40.png';
+  import logo2 from '$lib/assets/Logo300.png';
   export let data
   onMount(() => {
-    const theme = localStorage.getItem("myTheme");
-  if (theme) {
-    document.querySelector("html").setAttribute("data-theme", theme);
-  }
     if (data.userProfile){
      $userProfile = {
        email: data.userProfile.email,
@@ -44,7 +40,7 @@
   {#if $userProfile.loggedIn}
   <header
   class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4 h-[50px] w-full items-center  z-20">
-  <a href="/"><img class="btn-ghost ml-5 rounded" src={logo} width="45" height="45" alt="logo"></a>
+  <a href="/"><img class="btn-ghost ml-5 rounded" src={logo2} width="50" height="50" alt="logo"></a>
   <Themeswapper />
   <div class="hidden sm:block">
     <a href="/docs" class="btn">Docs</a>
@@ -70,7 +66,7 @@
   {:else}
 <header
 class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4  w-full items-center  z-10">
-<a href="/"><img class="btn-ghost ml-5 rounded" src={logo} width="45" height="45" alt="logo"></a>
+<a href="/"><img class="btn-ghost ml-5 rounded" src={logo2} width="50" height="50" alt="logo"></a>
 <Themeswapper />
 <div class="hidden sm:block">
   <a href="/create" class="btn">Create user</a>

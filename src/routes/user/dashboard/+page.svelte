@@ -129,7 +129,7 @@
     {#if data.domains}
       <div class="flex flex-wrap gap-2">
         {#each data.domains as domain}
-          <a href="/user/domain/{domain.DomainID}" target="_blank">
+          <a href="/user/domain/{domain.DomainID}">
             <div
               class="card overflow-hidden p-2 h-32 w-32 text-xl bg-base-300 grid place-items-center hover:bg-base-200"
             >

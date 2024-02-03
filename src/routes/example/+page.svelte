@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import {endpoint, exampleID} from "$lib/js/endpoints"
   import { notifications } from "$lib/stores/notifications";
-  import { loading } from "$lib/stores/loader.js";
+  import { loading} from "$lib/stores/loader.js";
   import Htmlcode from "$lib/Htmlcode.svelte";
   export let data;
   let dailyStats = [
@@ -103,7 +103,10 @@ let sums = sumStatsValues(dailyStats);
 </style>
 <div class=" flex flex-col justify-center items-center">
   <a href="/" class="btn mt-2">Back</a>
-  <h1 class="text-2xl my-1"><a class="text-blue-700" href={data.total.Url} target="_blank">{data.total.Name}</a> stats</h1>
+  {#await data.streamed.total}
+    Loading...
+  {:then total}
+  <h1 class="text-2xl my-1"><a class="text-blue-700" href={total.Url} target="_blank">{total.Name}</a> stats</h1>
   <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
     <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
       <div class="stat-figure text-secondary">
@@ -113,45 +116,45 @@ let sums = sumStatsValues(dailyStats);
           viewBox="0 0 24 24"
           class="inline-block w-8 h-8 stroke-current"
           ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 10V3L4 14h7v7l9-11h-7z"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 10V3L4 14h7v7l9-11h-7z"
           /></svg
-        >
+          >
+        </div>
+        <div class="stat-title">Total Page Views</div>
+        <div class="stat-value">{total.TotalVisits}</div>
+        {#if total.total > 0}
+        <div class="stat-desc text-green-500">change from last month: {total.total}%</div>
+        {:else if total.total < 0}
+        <div class="stat-desc text-red-600">change from last month: {total.total}%</div>
+        {/if}
       </div>
-      <div class="stat-title">Total Page Views</div>
-      <div class="stat-value">{data.total.TotalVisits}</div>
-      {#if data.total.total > 0}
-      <div class="stat-desc text-green-500">change from last month: {data.total.total}%</div>
-      {:else if data.total.total < 0}
-      <div class="stat-desc text-red-600">change from last month: {data.total.total}%</div>
-      {/if}
-    </div>
-    <div class="stat place-items-center">
-      <div class="stat-figure text-secondary">
-        <svg
+      <div class="stat place-items-center">
+        <div class="stat-figure text-secondary">
+          <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           class="inline-block w-8 h-8 stroke-current"
           ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-          /></svg
-        >
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          /></svg>
+        </div>
+        <div class="stat-title">Total Unique visits:</div>
+        <div class="stat-value">{total.TotalUnique}</div>
+        {#if total.unique > 0}
+        <div class="stat-desc text-green-500">change from last month: {total.unique}%</div>
+        {:else if total.unique < 0}
+        <div class="stat-desc text-red-600">change from last month: {total.unique}%</div>
+        {/if}
       </div>
-      <div class="stat-title">Total Unique visits:</div>
-      <div class="stat-value">{data.total.TotalUnique}</div>
-      {#if data.total.unique > 0}
-      <div class="stat-desc text-green-500">change from last month: {data.total.unique}%</div>
-      {:else if data.total.unique < 0}
-      <div class="stat-desc text-red-600">change from last month: {data.total.unique}%</div>
-      {/if}
     </div>
-  </div>
+    {/await}
   <select
     name="fetch"
     id="fetchdays"
@@ -221,5 +224,9 @@ let sums = sumStatsValues(dailyStats);
     </div>
     {/if}
   {/if}
-<Htmlcode id={data.total.ID} />
+  {#await data.streamed.total}
+    Loading...
+  {:then total} 
+  <Htmlcode id={total.ID} /> 
+  {/await}
 </div>
