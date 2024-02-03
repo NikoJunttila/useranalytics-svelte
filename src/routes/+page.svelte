@@ -40,8 +40,7 @@
 <div id="blur" on:mousemove={handleMousemove} class="z-10 overflow-hidden">
   <div class="w-full h-screen flex flex-col items-center justify-center p-5">
     <main id="card"
-      class="w-64 md:w-80  lg:w-96 grid place-items-center z-20 relative p-1 bg-base-200 shadow  overflow-hidden rounded-lg"
-    >
+    class="w-64 md:w-80  lg:w-96 grid place-items-center z-20 relative p-1 bg-base-200 shadow  overflow-hidden rounded-lg">
     <div class="grid lg:p-7 sm:text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
       <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
       <p class="text-center">Introducing Trustlytics</p>
@@ -52,10 +51,10 @@
         user analytics software designed with your privacy in mind.
       </p>
       <a class="mt-4" href="/example"
-      ><span>Discover how it works</span></a
-      >
+      ><span>Discover how it works</span></a>
     </div>
-    </main>
+    <div class="p-1 animatedShadow"></div>
+  </main>
     <button class="mt-5 heartbeat">
       <a href="#info">
         <span>
@@ -163,15 +162,9 @@
     translate: -50% -50%;
     border-radius: 50%;
     background: rgb(12, 112, 223);
-/*     background: linear-gradient(
-      66deg,
-      rgba(12, 112, 223, 1) 10%,
-      rgba(238, 233, 118, 1) 50%,
-      rgba(149, 0, 0, 1) 90%
-    ); */
     background-image: linear-gradient(180deg, hsl(var(--p)), hsl(var(--a)));
     animation: rotate 15s infinite;
-    opacity: 0.8;
+    /* opacity: 0.8; */
     pointer-events: none;
   }
   @media (max-width:500px){
@@ -181,10 +174,10 @@
   }
   #card{
     transition: all 0.2s linear;
+    filter: drop-shadow(-10px -9px 35px hsl(var(--p)));
   }
   #card:hover{
     scale: 1.03;
-    
     box-shadow: 15px 5px 50px rgba(0, 0, 0, .3);
   transform-origin: left center;
   transform: perspective(1000px) rotateY(-7deg);

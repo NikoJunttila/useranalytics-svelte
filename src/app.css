@@ -8,4 +8,5 @@ html,body{
     box-sizing: border-box;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    background-image: linear-gradient(120deg, hsl(var(--b1)) 40%, hsl(var(--p)) 100%);
 }
