@@ -1,6 +1,7 @@
 <script>
   // @ts-nocheck
   import Htmlcode from "$lib/Htmlcode.svelte";
+  import { onMount } from "svelte";
   let blob;
 
   function handleMousemove(event) {
@@ -13,17 +14,36 @@
       { duration: 3000, fill: "forwards" }
     );
   }
+  let hiddenElements = [];
 
+  onMount(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show2");
+        } else {
+          entry.target.classList.remove("show2");
+        }
+      });
+    });
+
+    // Query and observe hidden elements
+    hiddenElements = document.querySelectorAll(".hidden2");
+    hiddenElements.forEach((el) => observer.observe(el));
+    return () => {
+      observer.disconnect();
+    };
+  });
 </script>
 <div bind:this={blob} id="blob"></div>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div id="blur" on:mousemove={handleMousemove} class="z-10 overflow-hidden">
   <div class="w-full h-screen flex flex-col items-center justify-center p-5">
     <main id="card"
-      class="w-64 md:w-80 grid place-items-center z-20 relative p-1 bg-base-200 shadow  overflow-hidden rounded-lg"
+      class="w-64 md:w-80  lg:w-96 grid place-items-center z-20 relative p-1 bg-base-200 shadow  overflow-hidden rounded-lg"
     >
-    <div class="grid lg:p-7 place-items-center bg-base-200 p-2 z-10">
-      <h1 class="text-3xl py-2">Trustlytics</h1>
+    <div class="grid lg:p-7 sm:text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
       <p class="text-center">Introducing Trustlytics</p>
       <p>
         Your Privacy-Respecting, Open-Source User Analytics Solution. We
@@ -39,7 +59,6 @@
     <button class="mt-5 heartbeat">
       <a href="#info">
         <span>
-
           <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -53,39 +72,48 @@
       </a>
     </button>
   </div>
-  <div id="info" class="flex flex-col items-center scroll-m-12">
-    <section class="max-w-xl min-h-[20vh]">
+  <div class="h-1 bg-accent w-full"></div>
+  <div id="info" class="flex flex-col items-center mt-5 mx-2 gap-5 scroll-m-12 sm:text-2xl 
+  text-lg lg:text-3xl lg:grid lg:grid-cols-2 lg:place-items-center lg:mx-5
+  ">
+    <section class="max-w-xl min-h-[20vh] hidden2">
       🔒 Privacy First: With Trustlytics, your users' data remains confidential.
       We prioritize user privacy by using anonymized data and robust encryption,
       ensuring you can analyze user behavior without compromising their trust.
     </section>
-    <section class="max-w-xl min-h-[20vh]">
+    <div></div>
+    <div></div>
+    <section class="max-w-xl min-h-[20vh] hidden2">
       🌟 Incredibly Lightweight: Trustlytics efficient design ensures minimal
       impact on your system's resources. It runs smoothly in the background,
       allowing you to focus on what matters most - your data.
     </section>
-    <section class="max-w-xl min-h-[20vh]">
+    <section class="max-w-xl min-h-[20vh] hidden2">
       🌐 Open Source: We believe in transparency and collaboration. Trustlytics
       is open-source, meaning you have full access to the codebase, can
       customize it to your needs, and contribute to the community.
     </section>
-    <section class="max-w-xl min-h-[20vh]">
+    <div></div>
+    <div></div>
+    <section class="max-w-xl min-h-[20vh] hidden2">
       📊 Actionable Insights: Gain meaningful insights into user behavior,
       preferences, and trends. Trustlytics's powerful analytics tools empower
       you to make data-driven decisions that drive growth and innovation.
     </section>
-    <section class="max-w-xl min-h-[20vh]">
+    <section class="max-w-xl min-h-[20vh] hidden2">
       🛠️ Easy Integration: Seamlessly integrate Trustlytics into your website or
       application. Our user-friendly setup makes it accessible to businesses of
       all sizes.
     </section>
-    <section class="max-w-xl min-h-[20vh]">
+    <div></div>
+    <div></div>
+    <section class="max-w-xl min-h-[20vh] hidden2">
       📈 Scalable & Reliable: Whether you're a startup or an enterprise,
       Trustlytics scales with you. Our robust infrastructure ensures reliable
       performance even as your user base grows.
     </section>
   </div>
-  <div class="flex flex-col items-center pb-5">
+  <div class="flex flex-col items-center pb-5 mt-5 show2">
     <Htmlcode id="e325ccdb-284b-4f74-bfcd-c014c300a3c9" />
     <div>
       <a href="/create"><span>Create account</span></a>
@@ -95,13 +123,21 @@
 </div>
 
 <style>
-  section {
-    padding: 5px;
-    
-  }
-  @media (min-width: 768px) {
-    section {
-      font-size: 1.25rem;
+  .hidden2{
+  opacity:0;
+  transition: all 1s;
+  filter:blur(5px);
+  transform: translateX(-100%);
+  transition-timing-function: ease-in;
+}
+.show2{
+  opacity:1;
+  filter:blur(0);
+  transform: translateX(0);
+}
+  @media(prefers-reduced-motion){
+    .hidden2{
+      transition: none;
     }
   }
   @keyframes rotate {
