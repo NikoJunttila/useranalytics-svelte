@@ -2,7 +2,6 @@
   // @ts-nocheck
   import "../app.css";
   import Toast from "$lib/Toast.svelte";
-  import { onMount } from "svelte";
   import { userProfile } from "$lib/stores/userStore";
   import { goto } from "$app/navigation";
   import Themeswapper from "$lib/Themeswapper.svelte";
@@ -11,17 +10,8 @@
   import Footer from "$lib/Footer.svelte";
   import EntranceReveal from "$lib/EntranceReveal.svelte";
   import logo2 from '$lib/assets/Logo300.png';
-  export let data
-  onMount(() => {
-    if (data.userProfile){
-     $userProfile = {
-       email: data.userProfile.email,
-       apikey: data.userProfile.apikey,
-       loggedIn: data.userProfile.loggedIn,
-      };
-    }
 
-  });
+
   function removeApiKeyCookie() {
     document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     $userProfile = {
@@ -32,6 +22,7 @@
     goto("/")
   }
   let y = 0;
+  export let data
 </script>
 
 
@@ -71,7 +62,7 @@ class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4  w-full it
 <div class="hidden sm:block">
   <a href="/create" class="btn">Create user</a>
   <a href="/docs" class="btn">Docs</a>
-  <a class="btn mr-5" href="/login">Login</a>
+  <a class="btn mr-5" href="/user/login">Login</a>
 </div>
 <div class="dropdown dropdown-bottom dropdown-end sm:hidden mr-8 ">
   <div tabindex="0" id="hamburger" role="button" class="btn m-1 w-[60px] ">  
@@ -83,7 +74,7 @@ class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4  w-full it
 </div>
   <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
   <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-    <li><a href="/login">Sign in</a></li>
+    <li><a href="/user/login">Sign in</a></li>
     <li><a href="/create">Create user</a></li>
     <li><a href="/docs">Docs</a></li>
   </ul>

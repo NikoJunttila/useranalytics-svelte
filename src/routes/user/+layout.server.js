@@ -1,4 +1,4 @@
-/** @type {import('./$types').LayoutServerLoad} */
+// @ts-nocheck
 import {endpoint} from "$lib/js/endpoints"
 export async function load({ fetch, cookies }) {
   async function fetchUser() {

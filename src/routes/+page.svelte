@@ -116,7 +116,7 @@
     <Htmlcode id="e325ccdb-284b-4f74-bfcd-c014c300a3c9" />
     <div>
       <a href="/create"><span>Create account</span></a>
-      <a href="/login"><span>Login</span></a>
+      <a href="/user/login"><span>Login</span></a>
     </div>
   </div>
 </div>
