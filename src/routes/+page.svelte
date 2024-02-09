@@ -72,44 +72,56 @@
     </button>
   </div>
   <div class="h-1 bg-accent w-full"></div>
-  <div id="info" class="flex flex-col items-center mt-5 mx-2 gap-5 scroll-m-12 sm:text-2xl 
+  <div id="info" class="flex flex-col items-center mt-5 mx-2 gap-5 lg:gap-0 scroll-m-12 sm:text-2xl 
   text-lg lg:text-3xl lg:grid lg:grid-cols-2 lg:place-items-center lg:mx-5
   ">
-    <section class="max-w-xl min-h-[20vh] hidden2">
-      🔒 Privacy First: With Trustlytics, your users' data remains confidential.
-      We prioritize user privacy by using anonymized data and robust encryption,
-      ensuring you can analyze user behavior without compromising their trust.
+    <section class=" min-h-[20vh]">
+      <p class="hidden2">
+        🔒 Privacy First: With Trustlytics, your users' data remains confidential.
+        We prioritize user privacy by using anonymized data and robust encryption,
+        ensuring you can analyze user behavior without compromising their trust.
+      </p>
+      </section>
+    <div></div>
+    <div></div>
+    <section class="min-h-[20vh]">
+      <p class="hidden2 lg:ml-4">  
+        🌟 Incredibly Lightweight: Trustlytics efficient design ensures minimal
+        impact on your system's resources. It runs smoothly in the background,
+        allowing you to focus on what matters most - your data.
+      </p>
+    </section>
+    <section class="min-h-[20vh]">
+      <p class="hidden2 lg:ml-4">
+        🌐 Open Source: We believe in transparency and collaboration. Trustlytics
+        is open-source, meaning you have full access to the codebase, can
+        customize it to your needs, and contribute to the community.
+      </p>
     </section>
     <div></div>
     <div></div>
-    <section class="max-w-xl min-h-[20vh] hidden2">
-      🌟 Incredibly Lightweight: Trustlytics efficient design ensures minimal
-      impact on your system's resources. It runs smoothly in the background,
-      allowing you to focus on what matters most - your data.
+    <section class="min-h-[20vh]">
+      <p class="hidden2 lg:ml-4">
+        📊 Actionable Insights: Gain meaningful insights into user behavior,
+        preferences, and trends. Trustlytics's powerful analytics tools empower
+        you to make data-driven decisions that drive growth and innovation.
+      </p>
     </section>
-    <section class="max-w-xl min-h-[20vh] hidden2">
-      🌐 Open Source: We believe in transparency and collaboration. Trustlytics
-      is open-source, meaning you have full access to the codebase, can
-      customize it to your needs, and contribute to the community.
-    </section>
-    <div></div>
-    <div></div>
-    <section class="max-w-xl min-h-[20vh] hidden2">
-      📊 Actionable Insights: Gain meaningful insights into user behavior,
-      preferences, and trends. Trustlytics's powerful analytics tools empower
-      you to make data-driven decisions that drive growth and innovation.
-    </section>
-    <section class="max-w-xl min-h-[20vh] hidden2">
-      🛠️ Easy Integration: Seamlessly integrate Trustlytics into your website or
-      application. Our user-friendly setup makes it accessible to businesses of
-      all sizes.
+    <section class="min-h-[20vh]">
+      <p class="hidden2">
+        🛠️ Easy Integration: Seamlessly integrate Trustlytics into your website or
+        application. Our user-friendly setup makes it accessible to businesses of
+        all sizes.
+      </p>
     </section>
     <div></div>
     <div></div>
-    <section class="max-w-xl min-h-[20vh] hidden2">
-      📈 Scalable & Reliable: Whether you're a startup or an enterprise,
-      Trustlytics scales with you. Our robust infrastructure ensures reliable
-      performance even as your user base grows.
+    <section class="min-h-[20vh]">
+      <p class="hidden2 lg:ml-4">
+        📈 Scalable & Reliable: Whether you're a startup or an enterprise,
+        Trustlytics scales with you. Our robust infrastructure ensures reliable
+        performance even as your user base grows.
+      </p>
     </section>
   </div>
   <div class="flex flex-col items-center pb-5 mt-5 show2">
@@ -122,12 +134,34 @@
 </div>
 
 <style>
+
+@media (min-width:1024px){
+  #info > section:nth-child(odd){
+    border-right: hsl(var(--a)) solid 1px;
+    border-bottom: hsl(var(--a)) solid 1px;
+  }
+  #info > section:nth-child(even){
+    border-bottom: hsl(var(--a)) solid 1px;
+  }
+  #info > div:nth-child(odd){
+    border-right: hsl(var(--a)) solid 1px;
+  }
+  #info > div{
+    content: "";
+    width: 100%;
+    height: 100%;
+  }
+}
   .hidden2{
   opacity:0;
   transition: all 1s;
   filter:blur(5px);
   transform: translateX(-100%);
   transition-timing-function: ease-in;
+}
+::selection {
+  text-decoration: underline;
+  background: hsl(var(--p));
 }
 .show2{
   opacity:1;

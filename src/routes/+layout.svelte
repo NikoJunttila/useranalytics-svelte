@@ -99,8 +99,19 @@ class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4  w-full it
 
 
 <style>
+    @keyframes appear {
+    from {
+      opacity:0;
+      filter:blur(5px);
+    }
+    to {
+      opacity:1;
+      filter:blur(0);
+    }
+  }
   header{
         transition: 1s;
+        animation: 2.5s ease-in appear;
     }
     .hamburger-lines {
   display: block;

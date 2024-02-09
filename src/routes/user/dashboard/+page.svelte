@@ -133,7 +133,7 @@
             <div
               class="card overflow-hidden p-2 h-32 w-32 text-xl bg-base-300 grid place-items-center hover:bg-base-200"
             >
-              {domain.DomainName}
+             <p>{domain.DomainName}</p> 
             </div>
           </a>
         {/each}
