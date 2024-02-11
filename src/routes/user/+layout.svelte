@@ -2,6 +2,8 @@
 import { onMount } from "svelte";
 import { userProfile } from "$lib/stores/userStore";
 import { goto } from "$app/navigation";
+import { page } from '$app/stores';  
+
 
 
   export let data
@@ -12,7 +14,8 @@ import { goto } from "$app/navigation";
        apikey: data.userProfile.apikey,
        loggedIn: data.userProfile.loggedIn,
       };
-      goto("/user/dashboard")
+      if ($page.url.pathname === "/user/login")
+        goto("/user/dashboard")
     }
   });
 </script>

@@ -36,6 +36,7 @@
   });
 </script>
 <div bind:this={blob} id="blob"></div>
+
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div id="blur" on:mousemove={handleMousemove} class="z-10 overflow-hidden">
   <div class="w-full h-screen flex flex-col items-center justify-center p-5">
@@ -82,7 +83,8 @@
         ensuring you can analyze user behavior without compromising their trust.
       </p>
       </section>
-    <div></div>
+    <div>
+    </div>
     <div></div>
     <section class="min-h-[20vh]">
       <p class="hidden2 lg:ml-4">  
@@ -134,14 +136,15 @@
 </div>
 
 <style>
-
 @media (min-width:1024px){
   #info > section:nth-child(odd){
     border-right: hsl(var(--a)) solid 1px;
     border-bottom: hsl(var(--a)) solid 1px;
+    padding-bottom: 10px;
   }
   #info > section:nth-child(even){
     border-bottom: hsl(var(--a)) solid 1px;
+    padding-bottom: 10px;
   }
   #info > div:nth-child(odd){
     border-right: hsl(var(--a)) solid 1px;
@@ -198,7 +201,6 @@
     background: rgb(12, 112, 223);
     background-image: linear-gradient(180deg, hsl(var(--p)), hsl(var(--a)));
     animation: rotate 15s infinite;
-    /* opacity: 0.8; */
     pointer-events: none;
   }
   @media (max-width:500px){
@@ -218,7 +220,6 @@
   }
   #blur {
     backdrop-filter: blur(12vmax);
-    /* background: linear-gradient(128deg, hsl(var(--b1)) 0%, hsl(var(--b2)) 50%, hsl(var(--b3)) 100%) !important; */
   }
   #card::before {
   content: '';

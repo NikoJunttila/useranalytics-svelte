@@ -12,12 +12,13 @@
       NewVisitorCount: 0,
       AvgVisitDuration: 0,
       Visitfrom: "direct",
-      Count: 0,
+      Count: 0
     },
   ];
   let os;
   let browser;
   let device;
+  let bounceRate = 0;
   
   function sumStatsValues(statsArray) {
     if (!statsArray){
@@ -38,7 +39,7 @@
   return {
     sumDomainCount,
     sumNewVisitorCount,
-    sumAvgVisitDuration ,
+    sumAvgVisitDuration,
   };
 }
 let sums = sumStatsValues(dailyStats);
@@ -74,7 +75,8 @@ let sums = sumStatsValues(dailyStats);
       dailyStats = check.original
        dailyStats.sort(function (a, b) {
         return b.Count - a.Count;
-      }); 
+      });
+      bounceRate = check.bounce
       sums = sumStatsValues(dailyStats);
     } catch (err) {
       notifications.danger(err, 3000);
@@ -102,7 +104,7 @@ let sums = sumStatsValues(dailyStats);
   
 </style>
 <div class=" flex flex-col justify-center items-center">
-  <a href="/" class="btn mt-2">Back</a>
+  <a href="/" class="btn mt-2 bg-accent">Back</a>
   {#await data.streamed.total}
     Loading...
   {:then total}
@@ -181,6 +183,10 @@ let sums = sumStatsValues(dailyStats);
       <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
         <div class="stat-title">Avg visit duration:</div>
         <div class="stat-value">{Math.floor(sums.sumAvgVisitDuration)}s</div>
+      </div>
+      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
+        <div class="stat-title">Bounce rate:</div>
+        <div class="stat-value">{bounceRate}%</div>
       </div>
     </div>
     <p>Visits coming from:</p>
