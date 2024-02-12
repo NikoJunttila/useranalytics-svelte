@@ -19,6 +19,7 @@
   let browser;
   let device;
   let bounceRate = 0;
+  let pages;
   
   function sumStatsValues(statsArray) {
     if (!statsArray){
@@ -76,6 +77,7 @@ let sums = sumStatsValues(dailyStats);
        dailyStats.sort(function (a, b) {
         return b.Count - a.Count;
       });
+      pages = check.pages
       bounceRate = check.bounce
       sums = sumStatsValues(dailyStats);
     } catch (err) {
@@ -172,19 +174,19 @@ let sums = sumStatsValues(dailyStats);
   </select>
   {#if dailyStats}
     <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
+      <div class="stat place-items-center">
         <div class="stat-title">Page Views</div>
         <div class="stat-value">{sums.sumDomainCount}</div>
       </div>
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
+      <div class="stat place-items-center">
         <div class="stat-title">Unique visits:</div>
         <div class="stat-value">{sums.sumNewVisitorCount}</div>
       </div>
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
+      <div class="stat place-items-center">
         <div class="stat-title">Avg visit duration:</div>
         <div class="stat-value">{Math.floor(sums.sumAvgVisitDuration)}s</div>
       </div>
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
+      <div class="stat  place-items-center">
         <div class="stat-title">Bounce rate:</div>
         <div class="stat-value">{bounceRate}%</div>
       </div>
@@ -193,7 +195,7 @@ let sums = sumStatsValues(dailyStats);
     {#if dailyStats.length > 0}
     <div class="md:stats !bg-base-300 flex flex-col shadow">
       {#each dailyStats as from}
-        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+        <div class="stat">
           <div class="stat-title text-center">{from.Visitfrom}</div>
           <div class="stat-value">{from.Count}</div>
         </div>
@@ -204,7 +206,7 @@ let sums = sumStatsValues(dailyStats);
     <p>Browsers</p>
     <div class="md:stats !bg-base-300 flex flex-col shadow">
       {#each browser as b}
-        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+        <div class="stat">
           <div class="stat-title text-center">{b.ColumnValue}</div>
           <div class="stat-value">{b.Count}</div>
         </div>
@@ -213,7 +215,7 @@ let sums = sumStatsValues(dailyStats);
     <p>Operating systems</p>
     <div class="md:stats !bg-base-300 flex flex-col shadow">
       {#each os as os1}
-        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+        <div class="stat">
           <div class="stat-title text-center">{os1.ColumnValue}</div>
           <div class="stat-value">{os1.Count}</div>
         </div>
@@ -222,14 +224,28 @@ let sums = sumStatsValues(dailyStats);
     <p>Devices</p>
     <div class="md:stats  !bg-base-300 flex flex-col shadow">
       {#each device as dev}
-        <div class="stat md:border-b-0 border-neutral border-b-2 border-solid">
+        <div class="stat">
           <div class="stat-title text-center">{dev.ColumnValue}</div>
           <div class="stat-value">{dev.Count}</div>
         </div>
       {/each}
     </div>
     {/if}
+    <p>Pages visited</p>
+    <div class="md:stats  !bg-base-300 flex flex-col shadow">
+      {#if pages}
+      {#each pages as p}
+        <div class="stat">
+          <div class="stat-title text-center">{p.Page}</div>
+          <div class="stat-value">{p.PageCount}</div>
+        </div>
+      {/each}
+      {:else}
+      <p>no data for pages visited</p>
+      {/if}
+    </div>
   {/if}
+
   {#await data.streamed.total}
     Loading...
   {:then total} 
