@@ -186,11 +186,11 @@ let sums = sumStatsValues(dailyStats);
     </div>
     <p>Visits coming from:</p>
     {#if dailyStats.length > 0}
-    <div class="md:stats !bg-base-300 flex flex-col shadow">
+    <div class="bg-base-300 flex flex-col max-h-[25vh] overflow-y-auto shadow">
       {#each dailyStats as from}
         <div class="stat">
-          <div class="stat-title text-center">{from.Visitfrom}</div>
-          <div class="stat-value">{from.Count}</div>
+          <div class="stat-title text-center">{from.Visitfrom}: <span class="text-2xl text-base-content font-bold">{from.Count}</span></div>
+          <div class="stat-title text-center">avg visit: <span class="text-2xl text-base-content font-bold">{from.AvgVisitDuration}s</span></div>
         </div>
       {/each}
     </div>
@@ -225,18 +225,18 @@ let sums = sumStatsValues(dailyStats);
     </div>
     {/if}
     <p>Pages visited</p>
-    <div class="md:stats  !bg-base-300 flex flex-col shadow">
       {#if pages}
-      {#each pages as p}
-        <div class="stat">
-          <div class="stat-title text-center">{p.Page}</div>
-          <div class="stat-value">{p.PageCount}</div>
-        </div>
-      {/each}
-      {:else}
-      <p>no data for pages visited</p>
+      <div class="bg-base-300 flex flex-col max-h-[25vh] overflow-y-auto shadow">
+        {#each pages as p}
+          <div class="stat">
+            <div class="stat-title text-center">{p.Page}</div>
+            <div class="stat-value">{p.PageCount}</div>
+          </div>
+        {/each}
+      </div>
+        {:else}
+        <p>no data for pages visited</p>
       {/if}
-    </div>
   {/if}
 <Htmlcode id={data.total.ID} />
 </div>

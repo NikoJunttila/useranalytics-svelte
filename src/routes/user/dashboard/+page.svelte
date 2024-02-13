@@ -127,7 +127,7 @@
     </dialog>
     <p class="mb-4">Added domains</p>
     {#if data.domains}
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2 justify-center items-center">
         {#each data.domains as domain}
           <a href="/user/domain/{domain.DomainID}">
             <div
@@ -142,7 +142,7 @@
     <p class="text-xl my-2">
       Create new tracking link and start analysing user stats.
     </p>
-    <form on:submit|preventDefault={newDomain}>
+    <form class="flex flex-col" on:submit|preventDefault={newDomain}>
       <label for="name">Name:</label>
       <input
         name="name"
@@ -161,16 +161,14 @@
         type="text"
         placeholder="url"
       />
-      <button class="btn">Create</button>
+     <button class="btn mt-2">Create</button>
     </form>
     <p class="mt-5 mb-2 text-xl">
       Follow someone elses domain <span class="text-base"
         >(You need to get ID from them.)</span
       >
     </p>
-    <form on:submit|preventDefault={getFollow}>
-      <!--       <label for="name">Name:</label>
-      <input class="rounded-md" bind:value={follow.domain_name} type="text" placeholder="name" /> -->
+    <form class="mb-4" on:submit|preventDefault={getFollow}>
       <label for="id">ID:</label>
       <input
         id="id"

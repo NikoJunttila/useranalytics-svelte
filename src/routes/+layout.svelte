@@ -24,15 +24,14 @@
   let y = 0;
   export let data
 </script>
-
-
 <div class="min-h-screen flex flex-col overflow-hidden" use:loader={loading}>
   <EntranceReveal />
-  {#if $userProfile.loggedIn}
   <header
   class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4 h-[50px] w-full items-center  z-20">
   <a href="/"><img class="btn-ghost ml-5 rounded" src={logo2} width="50" height="50" alt="logo"></a>
   <Themeswapper />
+  {#if $userProfile.loggedIn}
+  
   <div class="hidden sm:block">
     <a href="/docs" class="btn">Docs</a>
     <a class="btn" href="/user/dashboard">dashboard</a>
@@ -53,42 +52,38 @@
       <li><button class="btn" on:click={removeApiKeyCookie}>Logout</button></li>
     </ul>
   </div>
-</header>
   {:else}
-<header
-class="{y > 50 ? "h-[50px]" : "h-[75px]"} bg-primary fixed flex gap-4  w-full items-center  z-10">
-<a href="/"><img class="btn-ghost ml-5 rounded" src={logo2} width="50" height="50" alt="logo"></a>
-<Themeswapper />
-<div class="hidden sm:block">
-  <a href="/create" class="btn">Create user</a>
-  <a href="/docs" class="btn">Docs</a>
-  <a class="btn mr-5" href="/user/login">Login</a>
-</div>
-<div class="dropdown dropdown-bottom dropdown-end sm:hidden mr-8 ">
-  <div tabindex="0" id="hamburger" role="button" class="btn m-1 w-[60px] ">  
-    <div class="hamburger-lines">
-    <span class="line line1"></span>
-    <span class="line line2"></span>
-    <span class="line line3"></span>
-</div>  
-</div>
-  <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-  <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-    <li><a href="/user/login">Sign in</a></li>
-    <li><a href="/create">Create user</a></li>
-    <li><a href="/docs">Docs</a></li>
-  </ul>
-</div>
-</header>
+  <div class="hidden sm:block">
+    <a href="/create" class="btn">Create user</a>
+    <a href="/docs" class="btn">Docs</a>
+    <a class="btn mr-5" href="/user/login">Login</a>
+  </div>
+  <div class="dropdown dropdown-bottom dropdown-end sm:hidden mr-8 ">
+    <div tabindex="0" id="hamburger" role="button" class="btn m-1 w-[60px] ">  
+      <div class="hamburger-lines">
+      <span class="line line1"></span>
+      <span class="line line2"></span>
+      <span class="line line3"></span>
+  </div>  
+  </div>
+    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+    <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+      <li><a href="/user/login">Sign in</a></li>
+      <li><a href="/create">Create user</a></li>
+      <li><a href="/docs">Docs</a></li>
+    </ul>
+  </div>
   {/if}
+</header>
+
   <div class="pt-[75px] min-h-screen">
     {#key data.url}
-    <div
+    <main
       in:fly={{ x: -200, duration: 300, delay: 300 }}
       out:fly={{ x: 200, duration: 300 }}
     >
       <slot />
-    </div>
+  </main>
   {/key}
   </div>
   <Toast />
