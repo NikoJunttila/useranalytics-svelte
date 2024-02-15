@@ -40,22 +40,22 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div id="blur" on:mousemove={handleMousemove} class="z-10 overflow-hidden">
   <div class="w-full h-screen flex flex-col items-center justify-center p-5">
-    <main id="card"
-    class="w-64 md:w-80  lg:w-96 grid place-items-center z-20 relative p-1 bg-base-200 shadow  overflow-hidden rounded-lg">
-    <div class="grid lg:p-7 sm:text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
-      <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
-      <p class="text-center">Introducing Trustlytics</p>
-      <p>
-        Your Privacy-Respecting, Open-Source User Analytics Solution. We
-        understand the importance of safeguarding user privacy while gaining
-        valuable insights. That's why we've created a cutting-edge, open-source
-        user analytics software designed with your privacy in mind.
-      </p>
-      <a class="mt-4" href="/example"
-      ><span>Discover how it works</span></a>
-    </div>
-    <div class="p-1 animatedShadow"></div>
-  </main>
+      <main id="card"
+      class="w-64 md:w-80  lg:w-96 grid place-items-center  z-20 p-1 pb-2 bg-base-200 shadow
+      overflow-hidden rounded-lg">
+      <div class="grid lg:p-7 sm:text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
+        <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
+        <p class="text-center">Introducing Trustlytics</p>
+        <p>
+          Your Privacy-Respecting, Open-Source User Analytics Solution. We
+          understand the importance of safeguarding user privacy while gaining
+          valuable insights. That's why we've created a cutting-edge, open-source
+          user analytics software designed with your privacy in mind.
+        </p>
+        <a class="mt-4" href="/example"
+        ><span>Discover how it works</span></a>
+      </div>
+    </main>
     <button class="mt-5 heartbeat">
       <a href="#info">
         <span>
@@ -136,6 +136,12 @@
 </div>
 
 <style>
+  #card:hover{
+    scale: 1.02;
+    box-shadow: 15px 5px 50px rgba(0, 0, 0, .3);
+  transform-origin: left center;
+  transform: perspective(1200px) rotateY(-5deg);
+  }
 @media (min-width:1024px){
   #info > section:nth-child(odd){
     border-right: hsl(var(--a)) solid 1px;
@@ -211,12 +217,6 @@
   #card{
     transition: all 0.2s linear;
     filter: drop-shadow(-10px -9px 35px hsl(var(--p)));
-  }
-  #card:hover{
-    scale: 1.03;
-    box-shadow: 15px 5px 50px rgba(0, 0, 0, .3);
-  transform-origin: left center;
-  transform: perspective(1000px) rotateY(-7deg);
   }
   #blur {
     backdrop-filter: blur(12vmax);
