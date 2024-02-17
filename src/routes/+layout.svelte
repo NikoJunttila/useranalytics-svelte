@@ -25,6 +25,7 @@
           loggedIn: false,
         };
     goto("/")}
+
   onMount(() => {
     const localization = localStorage.getItem("local");
     if (localization){
@@ -34,6 +35,13 @@
      } else {
       lang = false
      }
+    } else {
+      const langue = navigator.language
+      if (langue == "fi-FI"){
+        localStorage.setItem("local", "fi");
+        lang = false
+        $locale = "fi"
+      }
     }
   })
   let y = 0;
@@ -55,8 +63,8 @@ function toggleLanguage() {
   <input type="checkbox" class="toggle mx-1 toggle-primary" bind:checked={lang} on:change={toggleLanguage} />
   <img src={english} alt="suomi" width="40" height="40"/>
   </div>
+
   {#if $userProfile.loggedIn}
-  
   <div class="hidden sm:block">
     <a href="/docs" class="btn">{$t("nav.docs")}</a>
     <a class="btn" href="/user/dashboard">{$t("nav.dashboard")}</a>
@@ -105,8 +113,7 @@ function toggleLanguage() {
     {#key data.url}
     <main
       in:fly={{ x: -200, duration: 300, delay: 300 }}
-      out:fly={{ x: 200, duration: 300 }}
-    >
+      out:fly={{ x: 200, duration: 300 }}>
       <slot />
   </main>
   {/key}

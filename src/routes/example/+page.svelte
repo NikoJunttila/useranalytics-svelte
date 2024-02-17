@@ -92,6 +92,12 @@
   });
   let days = [7, 30, 90];
   let fetchValue = 30;
+  async function liveDat(){
+    const res = await fetch("http://localhost:8000/v1/wsCount")
+    const data = await res.json()
+    return data
+  }
+  let promise = liveDat()
 </script>
 
 <div class=" flex flex-col justify-center items-center">
@@ -133,6 +139,13 @@
       </g>
     </svg></a
   >
+  {#await promise}
+	<p>...waiting</p>
+{:then number}
+	<p class="text-lg">{$t("domain.live")}: <span class="font-bold text-xl rounded-xl bg-accent animate-pulse p-2">{number}</span></p>
+{:catch error}
+	<p style="color: red">{error.message}</p>
+{/await}
   {#await data.streamed.total}
     Loading...
   {:then total}
