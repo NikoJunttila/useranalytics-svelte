@@ -2,6 +2,8 @@
   // @ts-nocheck
   import Htmlcode from "$lib/Htmlcode.svelte";
   import { onMount } from "svelte";
+  import { t } from "$lib/localization/i18";
+
   let blob;
 
   function handleMousemove(event) {
@@ -17,6 +19,7 @@
   let hiddenElements = [];
 
   onMount(() => {
+    window.scrollTo(0, 0);
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -41,19 +44,16 @@
 <div id="blur" on:mousemove={handleMousemove} class="z-10 overflow-hidden">
   <div class="w-full h-screen flex flex-col items-center justify-center p-5">
       <main id="card"
-      class="w-64 md:w-80  lg:w-96 grid place-items-center  z-20 p-1 pb-2 bg-base-200 shadow
+      class="w-72 sm:w-80 md:w-96 grid place-items-center  z-20 p-1 pb-2 bg-base-200 shadow
       overflow-hidden rounded-lg">
-      <div class="grid lg:p-7 sm:text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
+      <div class="grid lg:p-7 text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
         <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
-        <p class="text-center">Introducing Trustlytics</p>
+        <p class="text-center">{$t("homepage.title")} Trustlytics</p>
         <p>
-          Your Privacy-Respecting, Open-Source User Analytics Solution. We
-          understand the importance of safeguarding user privacy while gaining
-          valuable insights. That's why we've created a cutting-edge, open-source
-          user analytics software designed with your privacy in mind.
+          {$t("homepage.paragraph")}
         </p>
         <a class="mt-4" href="/example"
-        ><span>Discover how it works</span></a>
+        ><span>{$t("homepage.how")}</span></a>
       </div>
     </main>
     <button class="mt-5 heartbeat">
@@ -78,9 +78,7 @@
   ">
     <section class=" min-h-[20vh]">
       <p class="hidden2">
-        🔒 Privacy First: With Trustlytics, your users' data remains confidential.
-        We prioritize user privacy by using anonymized data and robust encryption,
-        ensuring you can analyze user behavior without compromising their trust.
+        🔒 {$t("homepage.1")}
       </p>
       </section>
     <div>
@@ -88,49 +86,39 @@
     <div></div>
     <section class="min-h-[20vh]">
       <p class="hidden2 lg:ml-4">  
-        🌟 Incredibly Lightweight: Trustlytics efficient design ensures minimal
-        impact on your system's resources. It runs smoothly in the background,
-        allowing you to focus on what matters most - your data.
+        🌟 {$t("homepage.2")}
       </p>
     </section>
     <section class="min-h-[20vh]">
       <p class="hidden2 lg:ml-4">
-        🌐 Open Source: We believe in transparency and collaboration. Trustlytics
-        is open-source, meaning you have full access to the codebase, can
-        customize it to your needs, and contribute to the community.
+        🌐 {$t("homepage.3")}
       </p>
     </section>
     <div></div>
     <div></div>
     <section class="min-h-[20vh]">
       <p class="hidden2 lg:ml-4">
-        📊 Actionable Insights: Gain meaningful insights into user behavior,
-        preferences, and trends. Trustlytics's powerful analytics tools empower
-        you to make data-driven decisions that drive growth and innovation.
+        📊 {$t("homepage.4")}
       </p>
     </section>
     <section class="min-h-[20vh]">
       <p class="hidden2">
-        🛠️ Easy Integration: Seamlessly integrate Trustlytics into your website or
-        application. Our user-friendly setup makes it accessible to businesses of
-        all sizes.
+        🛠️ {$t("homepage.5")}
       </p>
     </section>
     <div></div>
     <div></div>
     <section class="min-h-[20vh]">
       <p class="hidden2 lg:ml-4">
-        📈 Scalable & Reliable: Whether you're a startup or an enterprise,
-        Trustlytics scales with you. Our robust infrastructure ensures reliable
-        performance even as your user base grows.
+        📈 {$t("homepage.6")}
       </p>
     </section>
   </div>
   <div class="flex flex-col items-center pb-5 mt-5 show2">
     <Htmlcode id="e325ccdb-284b-4f74-bfcd-c014c300a3c9" />
     <div>
-      <a href="/create"><span>Create account</span></a>
-      <a href="/user/login"><span>Login</span></a>
+      <a href="/create"><span>{$t("button.create")}</span></a>
+      <a href="/example"><span>{$t("button.example")}</span></a>
     </div>
   </div>
 </div>

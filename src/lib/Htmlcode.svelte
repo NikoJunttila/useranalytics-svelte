@@ -1,4 +1,5 @@
 <script>
+  import { t } from "$lib/localization/i18";
   const script = `<script>`;
   const scriptEnd = `<\/script>`;
   const script2 ="<script"
@@ -9,8 +10,8 @@
    export let id
 </script>
     <div id="getStarted" class="text-[1.2rem] mt-4 mx-4">
-        <h1>To get started just add a small script to your index HTML head tag and start tracking user stats.</h1>
-        <p>dID is unique to every domain so you need to login first to generate your own code that links your domains with that ID</p>
+        <h1>{$t("html.para1")}</h1>
+        <p>{$t("html.para2")}</p>
     </div>
     <div class="text-[0.6rem] md:text-xl lg:text-2xl bg-base-200  m-3  sm:p-7 rounded">
         <p><span class="text-blue-800">{script}</span><span class="text-red-600">var</span> dID="{id}"<span class="text-blue-800">{scriptEnd}</span></p>

@@ -6,6 +6,7 @@
   import { notifications } from "$lib/stores/notifications";
   import { loading } from "$lib/stores/loader.js";
   import Htmlcode from "$lib/Htmlcode.svelte";
+  import { t } from "$lib/localization/i18";
   export let data;
   let slug;
   $: {
@@ -24,6 +25,7 @@
   let browser;
   let device;
   let pages;
+  let bounceRate = 0;
   function sumStatsValues(statsArray) {
   // Initialize variables to hold the sums
   let sumDomainCount = 0;
@@ -78,6 +80,7 @@ let sums = sumStatsValues(dailyStats);
         return b.Count - a.Count;
       }); 
       pages = check.pages
+      bounceRate = check.bounce;
       sums = sumStatsValues(dailyStats);
     } catch (err) {
       notifications.danger(err, 3000);
@@ -105,57 +108,111 @@ let sums = sumStatsValues(dailyStats);
   
 </style>
 <div class=" flex flex-col justify-center items-center">
-  <a href="/user/dashboard" class="btn mt-2 bg-accent">Back</a>
-  <h1 class="text-2xl my-1"><a class="text-blue-700 " href={data.total.Url} target="_blank">{data.total.Name}</a> stats</h1>
-  <p class="mb-2">Domain analytics id: {data.total.ID}</p>
-  <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
-    <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
-      <div class="stat-figure text-secondary">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-8 h-8 stroke-current"
-          ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 10V3L4 14h7v7l9-11h-7z"
-          /></svg
-        >
+  <a href="/user/dashboard" class="btn mt-2  bg-accent">
+    <svg
+      fill="#000000"
+      height="20px"
+      width="20px"
+      version="1.1"
+      id="Capa_1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 26.676 26.676"
+      xml:space="preserve"
+    >
+      <g>
+        <path
+          d="M26.105,21.891c-0.229,0-0.439-0.131-0.529-0.346l0,0c-0.066-0.156-1.716-3.857-7.885-4.59
+        c-1.285-0.156-2.824-0.236-4.693-0.25v4.613c0,0.213-0.115,0.406-0.304,0.508c-0.188,0.098-0.413,0.084-0.588-0.033L0.254,13.815
+        C0.094,13.708,0,13.528,0,13.339c0-0.191,0.094-0.365,0.254-0.477l11.857-7.979c0.175-0.121,0.398-0.129,0.588-0.029
+        c0.19,0.102,0.303,0.295,0.303,0.502v4.293c2.578,0.336,13.674,2.33,13.674,11.674c0,0.271-0.191,0.508-0.459,0.562
+        C26.18,21.891,26.141,21.891,26.105,21.891z"
+        />
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+        <g> </g>
+      </g>
+    </svg></a
+  >
+  {#await data.streamed.total}
+    Loading...
+  {:then total}
+    <h1 class="text-2xl my-1">
+      <a class="text-blue-700" href={total.Url} target="_blank">{total.Name}</a>
+      {$t("domain.stats")}
+    </h1>
+<p class="mb-2 text-center">Domain id: {total.ID}</p>
+    <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
+      <div
+        class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center"
+      >
+        <div class="stat-figure text-secondary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="inline-block w-8 h-8 stroke-current"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            /></svg
+          >
+        </div>
+        <div class="stat-title">{$t("domain.totalV")}</div>
+        <div class="stat-value">{total.TotalVisits}</div>
+        {#if total.total > 0}
+          <div class="stat-desc text-green-500">
+            {$t("domain.change")}: {total.total}%
+          </div>
+        {:else if total.total < 0}
+          <div class="stat-desc text-red-600">
+            {$t("domain.change")}: {total.total}%
+          </div>
+        {/if}
       </div>
-      <div class="stat-title">Total Page Views</div>
-      <div class="stat-value">{data.total.TotalVisits}</div>
-      {#if data.total.total > 0}
-      <div class="stat-desc text-green-500">change from last month: {data.total.total}%</div>
-      {:else if data.total.total < 0}
-      <div class="stat-desc text-red-600">change from last month: {data.total.total}%</div>
-      {/if}
-    </div>
-    <div class="stat place-items-center">
-      <div class="stat-figure text-secondary">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="inline-block w-8 h-8 stroke-current"
-          ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
-          /></svg
-        >
+      <div class="stat place-items-center">
+        <div class="stat-figure text-secondary">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="inline-block w-8 h-8 stroke-current"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+            /></svg
+          >
+        </div>
+        <div class="stat-title">{$t("domain.totalU")}</div>
+        <div class="stat-value">{total.TotalUnique}</div>
+        {#if total.unique > 0}
+          <div class="stat-desc text-green-500">
+            change from last month: {total.unique}%
+          </div>
+        {:else if total.unique < 0}
+          <div class="stat-desc text-red-600">
+            change from last month: {total.unique}%
+          </div>
+        {/if}
       </div>
-      <div class="stat-title">Total Unique visits:</div>
-      <div class="stat-value">{data.total.TotalUnique}</div>
-      {#if data.total.unique > 0}
-      <div class="stat-desc text-green-500">change from last month: {data.total.unique}%</div>
-      {:else if data.total.unique < 0}
-      <div class="stat-desc text-red-600">change from last month: {data.total.unique}%</div>
-      {/if}
     </div>
-  </div>
+  {/await}
   <select
     name="fetch"
     id="fetchdays"
@@ -165,68 +222,94 @@ let sums = sumStatsValues(dailyStats);
   >
     {#each days as day}
       <option name="select" value={day}>
-        Last {day} days
+     <!--    Last {day} days -->
+        {@html $t("select.days", { days: day })}
       </option>
     {/each}
   </select>
   {#if dailyStats}
-    <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
-        <div class="stat-title">Page Views</div>
+    <div
+      class="md:stats !bg-base-300 flex gap-2 flex-col shadow divide-y-2 md:divide-y-0"
+    >
+      <div class="stat place-items-center">
+        <div class="stat-title">{$t("domain.pView")}</div>
         <div class="stat-value">{sums.sumDomainCount}</div>
       </div>
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
-        <div class="stat-title">Unique visits:</div>
+      <div class="stat place-items-center">
+        <div class="stat-title">{$t("domain.pUniq")}</div>
         <div class="stat-value">{sums.sumNewVisitorCount}</div>
       </div>
-      <div class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center">
-        <div class="stat-title">Avg visit duration:</div>
+      <div class="stat place-items-center">
+        <div class="stat-title">{$t("domain.pAvg")}</div>
         <div class="stat-value">{Math.floor(sums.sumAvgVisitDuration)}s</div>
       </div>
+      <div class="stat place-items-center">
+        <div class="stat-title">{$t("domain.pBounce")}</div>
+        <div class="stat-value">{bounceRate}%</div>
+      </div>
     </div>
-    <p>Visits coming from:</p>
+    <p>{$t("domain.from")}:</p>
     {#if dailyStats.length > 0}
-    <div class="bg-base-300 flex flex-col max-h-[25vh] overflow-y-auto shadow">
-      {#each dailyStats as from}
-        <div class="stat">
-          <div class="stat-title text-center">{from.Visitfrom}: <span class="text-2xl text-base-content font-bold">{from.Count}</span></div>
-          <div class="stat-title text-center">avg visit: <span class="text-2xl text-base-content font-bold">{from.AvgVisitDuration}s</span></div>
-        </div>
-      {/each}
-    </div>
+      <div
+        class="bg-base-300 flex flex-col max-h-[25vh] overflow-y-auto shadow divide-y-2"
+      >
+        {#each dailyStats as from}
+          <div class="stat">
+            <div class="stat-title text-center">
+              {from.Visitfrom}:
+              <span class="text-2xl text-base-content font-bold"
+                >{from.Count}</span
+              >
+            </div>
+            <div class="stat-title text-center">
+              {$t("domain.fromAvg")}: <span class="text-2xl text-base-content font-bold"
+                >{from.AvgVisitDuration}s</span
+              >
+            </div>
+          </div>
+        {/each}
+      </div>
     {/if}
     {#if os}
-    <p>Browsers</p>
-    <div class="md:stats !bg-base-300 flex flex-col shadow">
-      {#each browser as b}
-        <div class="stat">
-          <div class="stat-title text-center">{b.ColumnValue}</div>
-          <div class="stat-value">{b.Count}</div>
-        </div>
-      {/each}
-    </div>
-    <p>Operating systems</p>
-    <div class="md:stats !bg-base-300 flex flex-col shadow">
-      {#each os as os1}
-        <div class="stat">
-          <div class="stat-title text-center">{os1.ColumnValue}</div>
-          <div class="stat-value">{os1.Count}</div>
-        </div>
-      {/each}
-    </div>
-    <p>Devices</p>
-    <div class="md:stats  !bg-base-300 flex flex-col shadow">
-      {#each device as dev}
-        <div class="stat ">
-          <div class="stat-title text-center">{dev.ColumnValue}</div>
-          <div class="stat-value">{dev.Count}</div>
-        </div>
-      {/each}
-    </div>
+      <p>{$t("domain.browser")}</p>
+      <div
+        class="md:stats !bg-base-300 flex flex-col shadow divide-y-2 md:divide-y-0"
+      >
+        {#each browser as b}
+          <div class="stat">
+            <div class="stat-title text-center">{b.ColumnValue}</div>
+            <div class="stat-value">{b.Count}</div>
+          </div>
+        {/each}
+      </div>
+      <p>{$t("domain.os")}</p>
+      <div
+        class="md:stats !bg-base-300 flex flex-col shadow divide-y-2 md:divide-y-0"
+      >
+        {#each os as os1}
+          <div class="stat">
+            <div class="stat-title text-center">{os1.ColumnValue}</div>
+            <div class="stat-value">{os1.Count}</div>
+          </div>
+        {/each}
+      </div>
+      <p>{$t("domain.device")}</p>
+      <div
+        class="md:stats !bg-base-300 flex flex-col shadow divide-y-2 md:divide-y-0"
+      >
+        {#each device as dev}
+          <div class="stat">
+            <div class="stat-title text-center">{dev.ColumnValue}</div>
+            <div class="stat-value">{dev.Count}</div>
+          </div>
+        {/each}
+      </div>
     {/if}
-    <p>Pages visited</p>
-      {#if pages}
-      <div class="bg-base-300 flex flex-col max-h-[25vh] overflow-y-auto shadow">
+    <p>{$t("domain.pagesVisited")}</p>
+    {#if pages}
+      <div
+        class="bg-base-300 flex flex-col max-h-[25vh] overflow-y-auto shadow divide-y-2"
+      >
         {#each pages as p}
           <div class="stat">
             <div class="stat-title text-center">{p.Page}</div>
@@ -234,9 +317,13 @@ let sums = sumStatsValues(dailyStats);
           </div>
         {/each}
       </div>
-        {:else}
-        <p>no data for pages visited</p>
-      {/if}
+    {:else}
+      <p>no data for pages visited</p>
+    {/if}
   {/if}
-<Htmlcode id={data.total.ID} />
+  {#await data.streamed.total}
+    Loading...
+  {:then total} 
+  <Htmlcode id={total.ID} /> 
+  {/await}
 </div>

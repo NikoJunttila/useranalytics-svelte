@@ -1,5 +1,6 @@
 <script>
   // @ts-nocheck
+  import { t } from "$lib/localization/i18";
   import { onMount } from "svelte";
   let themeIndex = 0
   onMount(() => {
@@ -29,7 +30,7 @@
 
 <div class="ml-auto dropdown dropdown-hover">
   <div tabindex="0" role="button" class="btn m-1">
-    Theme
+    {$t("nav.theme")}
     <svg
       width="12px"
       height="12px"

@@ -76,7 +76,7 @@
   </form>
   <div class="flex gap-2">
     <button class="btn" onclick="my_modal_2.showModal()">Forgot password?</button>
-      <button class="btn"><a href="/create">create user</a></button>
+      <button class="btn animate-pulse bg-primary"><a href="/create">create user</a></button>
   </div>
   </div>
   <dialog id="my_modal_2" class="modal">

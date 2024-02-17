@@ -6,6 +6,7 @@
   import { endpoint } from "$lib/js/endpoints";
   import { loading } from "$lib/stores/loader.js";
   export let data;
+  import { t } from "$lib/localization/i18";
 
   let domainData = {
     name: "",
@@ -105,7 +106,7 @@
 <section class="flex flex-col justify-center items-center">
   <div class="text-center">
     <p>{$userProfile.email}</p>
-    <button class="btn my-2" onclick="my_modal_3.showModal()">Change password</button>
+    <button class="btn my-2" onclick="my_modal_3.showModal()">{$t("dashboard.btn1")}</button>
     <dialog id="my_modal_3" class="modal">
       <div class="modal-box">
         <form method="dialog">
@@ -113,7 +114,7 @@
             >✕</button
           >
         </form>
-        <h3 class="font-bold text-lg text-center">Password change</h3>
+        <h3 class="font-bold text-lg text-center">{$t("dashboard.btn1")}</h3>
         <form class="text-center" on:submit|preventDefault={reset}>
           <label for="password" class="py-4 mr-2">Old password:</label>
           <input class="my-3 input bg-base-300" type="password" bind:value={password} name="password" id="password">
@@ -121,11 +122,11 @@
           <label for="newPass" class="py-4 mr-2">New password:</label>
           <input class="my-3 input bg-base-300" type="password" bind:value={newPass} name="newPass" id="newPass">
           <br>
-          <button class="btn" type="submit">Change password</button>
+          <button class="btn" type="submit">{$t("dashboard.btn1")}</button>
         </form>
       </div>
     </dialog>
-    <p class="mb-4">Added domains</p>
+    <p class="mb-4">{$t("dashboard.added")}</p>
     {#if data.domains}
       <div class="flex flex-wrap gap-2 justify-center items-center">
         {#each data.domains as domain}
@@ -140,10 +141,10 @@
       </div>
     {/if}
     <p class="text-xl my-2">
-      Create new tracking link and start analysing user stats.
+      {$t("dashboard.p1")}.
     </p>
     <form class="flex flex-col" on:submit|preventDefault={newDomain}>
-      <label for="name">Name:</label>
+      <label for="name">{$t("dashboard.name")}:</label>
       <input
         name="name"
         id="name"
@@ -161,12 +162,10 @@
         type="text"
         placeholder="url"
       />
-     <button class="btn mt-2">Create</button>
+     <button class="btn mt-2">{$t("dashboard.btn3")}</button>
     </form>
     <p class="mt-5 mb-2 text-xl">
-      Follow someone elses domain <span class="text-base"
-        >(You need to get ID from them.)</span
-      >
+      {$t("dashboard.p2")}
     </p>
     <form class="mb-4" on:submit|preventDefault={getFollow}>
       <label for="id">ID:</label>
@@ -178,7 +177,7 @@
         type="text"
         placeholder="domain id"
       />
-      <button class="btn">Follow</button>
+      <button class="btn">{$t("dashboard.btn2")}</button>
     </form>
   </div>
 </section>

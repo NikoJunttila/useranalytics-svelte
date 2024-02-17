@@ -24,7 +24,10 @@ export async function load({ cookies, params, setHeaders }) {
     }
     const total = await res.json();
     return {
-      total,
+      streamed : {
+        total: total
+      }
+      /* total */
     };
   } catch (error) {
     console.error("Error fetching data:", error);
