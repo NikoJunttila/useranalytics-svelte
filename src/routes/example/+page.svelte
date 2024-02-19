@@ -93,7 +93,7 @@
   let days = [7, 30, 90];
   let fetchValue = 30;
   async function liveDat(){
-    const res = await fetch("http://localhost:8000/v1/wsCount")
+    const res = await fetch(`${endpoint}/v1/wsCount`)
     const data = await res.json()
     return data
   }
