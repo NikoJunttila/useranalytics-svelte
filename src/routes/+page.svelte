@@ -19,6 +19,7 @@
   let hiddenElements = [];
 
   onMount(() => {
+    change()
     window.scrollTo(0, 0);
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -37,6 +38,36 @@
       observer.disconnect();
     };
   });
+
+  let text = "";
+  let interval = null;
+  let value = "";
+	const values = ["Open and Transparent", "Free to use", "Open-Source Analytics","Ethical Data Collection"]
+	let index = 0
+  
+	function change() {
+	value = values[index]
+	if (index == values.length - 1){
+		index = 0
+	} else {
+		index++
+	}
+    text = "";
+    clearInterval(interval);
+    let i = 0;
+    interval = setInterval(() => {
+      if (i < value.length) {
+        const char = value[i];
+        text = text.concat(char);
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50); // Adjust the delay (in milliseconds) as needed
+		setTimeout(() => {
+			change()
+		},5000)
+  }
 </script>
 <div bind:this={blob} id="blob"></div>
 
@@ -49,6 +80,7 @@
       <div class="grid lg:p-7 text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
         <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
         <p class="text-center">{$t("homepage.title")} Trustlytics</p>
+        <p class="scale-125 my-2 font-bold text-primary">{text}!</p>
         <p>
           {$t("homepage.paragraph")}
         </p>
