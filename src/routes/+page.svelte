@@ -42,7 +42,7 @@
   let text = "";
   let interval = null;
   let value = "";
-	const values = ["Open and Transparent", "Free to use", "Open-Source Analytics","Ethical Data Collection"]
+	const values = ["Open and Transparent.", "Free to use.", "Open-Source Analytics.","Ethical Data Collection."]
 	let index = 0
   
 	function change() {
@@ -73,14 +73,14 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div id="blur" on:mousemove={handleMousemove} class="z-10 overflow-hidden">
-  <div class="w-full h-screen flex flex-col items-center justify-center p-5">
+  <div class="w-full bg  h-screen flex flex-col items-center justify-center p-5">
       <main id="card"
       class="w-72 sm:w-80 md:w-96 grid place-items-center  z-20 p-1 pb-2 bg-base-200 shadow
       overflow-hidden rounded-lg">
-      <div class="grid lg:p-7 text-xl md:text-2xl place-items-center bg-base-200 p-4 z-10">
+      <div class="grid lg:p-7 text-xl md:text-2xl place-items-center rounded-lg bg-gradient-to-b from-base-200 to-neutral-content from-75% p-4 z-10">
         <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
         <p class="text-center">{$t("homepage.title")} Trustlytics</p>
-        <p class="scale-125 my-2 font-bold text-primary">{text}!</p>
+        <p class="scale-125 my-2 font-bold text-primary">{text}<span class="animateA text-accent">|</span></p>
         <p>
           {$t("homepage.paragraph")}
         </p>
@@ -88,13 +88,13 @@
         ><span>{$t("homepage.how")}</span></a>
       </div>
     </main>
-    <button class="mt-5 heartbeat">
+    <button class="mt-5 text-neutral heartbeat">
       <a href="#info">
         <span>
           <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
+          width="25"
+          height="25"
           viewBox="0 0 256 256"
           ><path
           fill="currentColor"
@@ -156,6 +156,10 @@
 </div>
 
 <style>
+      .bg{
+  background-image: linear-gradient(hsl(var(--p)) .1em, transparent .1em), linear-gradient(90deg, hsl(var(--a)) .1em, transparent .1em);
+  background-size: 4em 4em;
+}
   #card:hover{
     scale: 1.02;
     box-shadow: 15px 5px 50px rgba(0, 0, 0, .3);
@@ -215,7 +219,20 @@
       rotate: 360deg;
     }
   }
-
+  .animateA{
+    animation: appear 5s infinite;
+  }
+  @keyframes appear {
+    0%,50% {
+      opacity: 0.2;
+    }
+    25%,75% {
+      opacity: 1;
+    }
+    100%{
+      opacity: 0.2;
+    }
+  }
   #blob {
     height: 25vmax;
     aspect-ratio: 1;
