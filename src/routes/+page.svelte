@@ -90,6 +90,10 @@
         class="grid lg:p-7 text-xl md:text-2xl place-items-center rounded-lg bg-gradient-to-b from-base-200 to-neutral-content from-75% p-4 z-10"
       >
         <h1 class="text-3xl md:text-4xl lg:text-5xl py-2">Trustlytics</h1>
+        <h2 class="sr-only">analytics</h2>
+        <h3 class="sr-only">open-source</h3>
+        <h4 class="sr-only">free</h4>
+        <h5 class="sr-only">secure</h5>
         <p class="text-center">{$t("homepage.title")} Trustlytics</p>
         <p class="scale-125 my-2 font-bold text-primary">
           {text}<span class="animateA text-accent">|</span>

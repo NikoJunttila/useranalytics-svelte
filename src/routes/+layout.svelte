@@ -111,11 +111,11 @@ function toggleLanguage() {
 
   <div class="pt-[75px] min-h-screen">
     {#key data.url}
-    <main
+    <div
       in:fly={{ x: -200, duration: 300, delay: 300 }}
       out:fly={{ x: 200, duration: 300 }}>
       <slot />
-  </main>
+  </div>
   {/key}
   </div>
   <Toast />
