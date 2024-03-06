@@ -94,6 +94,7 @@
         <h3 class="sr-only">open-source</h3>
         <h4 class="sr-only">free</h4>
         <h5 class="sr-only">secure</h5>
+        <h6 class="sr-only">Easy to use</h6>
         <p class="text-center">{$t("homepage.title")} Trustlytics</p>
         <p class="scale-125 my-2 font-bold text-primary">
           {text}<span class="animateA text-accent">|</span>

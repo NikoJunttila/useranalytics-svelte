@@ -89,6 +89,7 @@
   onMount(() => {
     loading.set(false);
     getDaysData();
+    promise = liveDat()
   });
   let days = [7, 30, 90];
   let fetchValue = 30;
@@ -97,9 +98,11 @@
     const data = await res.json()
     return data
   }
-  let promise = liveDat()
+  let promise
 </script>
-
+<svelte:head>
+    <title>Example</title>
+</svelte:head>
 <div class=" flex flex-col justify-center items-center">
   <a href="/" class="btn mt-2 text-xl bg-accent">
     <svg

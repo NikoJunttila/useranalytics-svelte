@@ -107,6 +107,9 @@ let sums = sumStatsValues(dailyStats);
   }
   
 </style>
+<svelte:head>
+    <title>Domain</title>
+</svelte:head>
 <div class=" flex flex-col justify-center items-center">
   <a href="/user/dashboard" class="btn mt-2  bg-accent">
     <svg

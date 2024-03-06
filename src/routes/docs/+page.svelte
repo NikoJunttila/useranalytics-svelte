@@ -8,10 +8,10 @@
     img{
         border-radius: 15px;
     }
-    
-
-
 </style>
+<svelte:head>
+    <title>Documentation</title>
+</svelte:head>
 <div class="flex flex-col justify-center items-center text-center gap-5 text-2xl">
     <section id="quickstart">
         <h2>{$t("doc.p1")}</h2>

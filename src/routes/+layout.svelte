@@ -15,8 +15,6 @@
   import finland from '$lib/assets/finland-32.png';
   import english from '$lib/assets/english.png';
 
-
-
   function removeApiKeyCookie() {
     document.cookie = "api_key=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     $userProfile = {
@@ -51,7 +49,11 @@ function toggleLanguage() {
   $locale = $locale === "en" ? "fi" : "en";
   localStorage.setItem("local", $locale);
 }
+
 </script>
+<svelte:head>
+    <title>Trustlytics</title>
+</svelte:head>
 <div class="min-h-screen flex flex-col overflow-hidden" use:loader={loading}>
   <EntranceReveal />
   <header
