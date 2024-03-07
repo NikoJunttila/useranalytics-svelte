@@ -62,7 +62,7 @@ function toggleLanguage() {
   <Themeswapper />
   <div class="flex justify-center items-center">
     <img src={finland} alt="suomi" width="40" height="40"/>
-  <input type="checkbox" class="toggle mx-1 toggle-primary" bind:checked={lang} on:change={toggleLanguage} />
+  <input name="toggle" type="checkbox" class="toggle mx-1 toggle-primary" bind:checked={lang} on:change={toggleLanguage} />
   <img src={english} alt="suomi" width="40" height="40"/>
   </div>
 

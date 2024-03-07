@@ -1,6 +1,6 @@
 <script>
   // @ts-nocheck
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { endpoint, exampleID } from "$lib/js/endpoints";
   import { notifications } from "$lib/stores/notifications";
   import { loading } from "$lib/stores/loader.js";
@@ -86,22 +86,50 @@
       loading.set(false);
     }
   }
+
   onMount(() => {
     loading.set(false);
     getDaysData();
-    promise = liveDat()
+    setupWebSocket();
+  });
+
+  function setupWebSocket() {
+  socket = new WebSocket("wss://analytics-derp.koyeb.app/v1/ws");
+  
+  socket.onopen = () => {
+    console.log("WebSocket connection established");
+  };
+  
+  socket.onmessage = (event) => {
+    // Update clientCount based on server data
+    clientCount = parseInt(event.data);
+  };
+  
+  socket.onclose = () => {
+    console.log("WebSocket connection closed");
+    // Re-open the connection after a delay (e.g., 1 second)
+    setTimeout(() => {
+      setupWebSocket();
+    }, 1000);
+  };
+  socket.onerror = (error) => {
+    console.error("WebSocket error:", error);
+  };
+}
+  let socket;
+  let clientCount = 1;
+  onDestroy(() => {
+    // Close the WebSocket connection when the component is destroyed
+    if (socket) {
+      socket.close();
+    }
   });
   let days = [7, 30, 90];
   let fetchValue = 30;
-  async function liveDat(){
-    const res = await fetch(`${endpoint}/v1/wsCount`)
-    const data = await res.json()
-    return data
-  }
-  let promise
 </script>
+
 <svelte:head>
-    <title>Example</title>
+  <title>Example</title>
 </svelte:head>
 <div class=" flex flex-col justify-center items-center">
   <a href="/" class="btn mt-2 text-xl bg-accent">
@@ -142,13 +170,12 @@
       </g>
     </svg></a
   >
-  {#await promise}
-	<p>...waiting</p>
-{:then number}
-	<p class="text-lg">{$t("domain.live")}: <span class="font-bold text-xl rounded-xl bg-accent animate-pulse p-2">{number}</span></p>
-{:catch error}
-	<p style="color: red">{error.message}</p>
-{/await}
+  <p class="text-lg">
+    {$t("domain.live")}:
+    <span class="font-bold text-xl rounded-xl bg-accent animate-pulse p-2"
+      >{clientCount}</span
+    >
+  </p>
   {#await data.streamed.total}
     Loading...
   {:then total}
@@ -224,7 +251,7 @@
   >
     {#each days as day}
       <option name="select" value={day}>
-     <!--    Last {day} days -->
+        <!--    Last {day} days -->
         {@html $t("select.days", { days: day })}
       </option>
     {/each}
@@ -264,7 +291,8 @@
               >
             </div>
             <div class="stat-title text-center">
-              {$t("domain.fromAvg")}: <span class="text-2xl text-base-content font-bold"
+              {$t("domain.fromAvg")}:
+              <span class="text-2xl text-base-content font-bold"
                 >{from.AvgVisitDuration}s</span
               >
             </div>
