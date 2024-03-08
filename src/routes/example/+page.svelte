@@ -94,36 +94,38 @@
   });
 
   function setupWebSocket() {
-  socket = new WebSocket("wss://analytics-derp.koyeb.app/v1/ws");
-  
-  socket.onopen = () => {
-    console.log("WebSocket connection established");
-  };
-  
-  socket.onmessage = (event) => {
-    // Update clientCount based on server data
-    clientCount = parseInt(event.data);
-  };
-  
-  socket.onclose = () => {
-    console.log("WebSocket connection closed");
-    // Re-open the connection after a delay (e.g., 1 second)
-    setTimeout(() => {
-      setupWebSocket();
-    }, 1000);
-  };
-  socket.onerror = (error) => {
-    console.error("WebSocket error:", error);
-  };
-}
+    //socket = new WebSocket("wss://analytics-derp.koyeb.app/v1/ws");
+    socket = new WebSocket("ws://localhost:8000/v1/wsCount");
+
+    socket.onopen = () => {
+      console.log("WebSocket connection established");
+    };
+
+    socket.onmessage = (event) => {
+      // Update clientCount based on server data
+      clientCount = parseInt(event.data);
+    };
+
+    socket.onclose = () => {
+      console.log("WebSocket connection closed");
+      // Re-open the connection after a delay (e.g., 1 second)
+      setTimeout(() => {
+        setupWebSocket();
+      }, 1000);
+    };
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+    };
+  }
   let socket;
   let clientCount = 1;
+
   onDestroy(() => {
-    // Close the WebSocket connection when the component is destroyed
     if (socket) {
       socket.close();
     }
   });
+
   let days = [7, 30, 90];
   let fetchValue = 30;
 </script>
@@ -205,11 +207,11 @@
         <div class="stat-value">{total.TotalVisits}</div>
         {#if total.total > 0}
           <div class="stat-desc text-green-500">
-            {$t("domain.change")}: {total.total}%
+            {$t("domain.change")}: {Math.floor(total.total)}%
           </div>
         {:else if total.total < 0}
           <div class="stat-desc text-red-600">
-            {$t("domain.change")}: {total.total}%
+            {$t("domain.change")}: {Math.floor(total.total)}%
           </div>
         {/if}
       </div>
@@ -232,11 +234,11 @@
         <div class="stat-value">{total.TotalUnique}</div>
         {#if total.unique > 0}
           <div class="stat-desc text-green-500">
-            change from last month: {total.unique}%
+            change from last month: {Math.floor(total.unique)}%
           </div>
         {:else if total.unique < 0}
           <div class="stat-desc text-red-600">
-            change from last month: {total.unique}%
+            change from last month: {Math.floor(total.unique)}%
           </div>
         {/if}
       </div>

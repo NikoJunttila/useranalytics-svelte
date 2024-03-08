@@ -179,11 +179,11 @@ let sums = sumStatsValues(dailyStats);
         <div class="stat-value">{total.TotalVisits}</div>
         {#if total.total > 0}
           <div class="stat-desc text-green-500">
-            {$t("domain.change")}: {total.total}%
+            {$t("domain.change")}: {Math.floor(total.total)}%
           </div>
         {:else if total.total < 0}
           <div class="stat-desc text-red-600">
-            {$t("domain.change")}: {total.total}%
+            {$t("domain.change")}: {Math.floor(total.total)}%
           </div>
         {/if}
       </div>
@@ -206,11 +206,11 @@ let sums = sumStatsValues(dailyStats);
         <div class="stat-value">{total.TotalUnique}</div>
         {#if total.unique > 0}
           <div class="stat-desc text-green-500">
-            change from last month: {total.unique}%
+            change from last month: {Math.floor(total.unique)}%
           </div>
         {:else if total.unique < 0}
           <div class="stat-desc text-red-600">
-            change from last month: {total.unique}%
+            change from last month: {Math.floor(total.unique)}%
           </div>
         {/if}
       </div>
