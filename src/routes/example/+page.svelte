@@ -94,8 +94,8 @@
   });
 
   function setupWebSocket() {
-    //socket = new WebSocket("wss://analytics-derp.koyeb.app/v1/ws");
-    socket = new WebSocket("ws://localhost:8000/v1/wsCount");
+    socket = new WebSocket("wss://analytics-derp.koyeb.app/v1/wsCount");
+    //socket = new WebSocket("ws://localhost:8000/v1/wsCount");
 
     socket.onopen = () => {
       console.log("WebSocket connection established");
