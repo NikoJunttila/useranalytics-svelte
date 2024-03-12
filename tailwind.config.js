@@ -9,7 +9,7 @@ export default {
   daisyui: {
     // themes: ["bumblebee", "coffee","dark"],
 themes: [
-      "coffee","dark","bumblebee","valentine",
+      "coffee","dark","bumblebee","valentine","lemonade",
        {
           mytheme: {
 "primary": "#c026d3",

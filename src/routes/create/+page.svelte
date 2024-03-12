@@ -97,10 +97,10 @@
       required
     />
     {#if warning}
-    <p class="text-red-900">{warning}</p>
+    <p class="text-red-900 text-xl">{warning}</p>
     {/if}
     {#if formData.email && !emailValid}
-      <p class="text-red-900 text-xs">Please enter a valid email address.</p>
+      <p class="text-red-900 text-xl">Please enter a valid email address.</p>
     {/if}
     <label for="password">Password:</label>
     <input
@@ -114,7 +114,7 @@
       required
     />
     {#if formData.password && !firstpassValid}
-      <p class="text-red-900 text-xs">
+      <p class="text-red-900 text-xl">
         Password must have
         {#if !minlen}
           atleast 8 characters,

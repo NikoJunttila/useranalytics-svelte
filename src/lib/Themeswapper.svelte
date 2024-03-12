@@ -25,6 +25,7 @@
     { name: "coffee", color: "#211720" },
     { name: "bumblebee", color: "#f7f7f7" },
     { name: "valentine", color: "#f0d6e8" },
+    { name: "lemonade", color: "#3ce66f" },
   ];
 </script>
 
