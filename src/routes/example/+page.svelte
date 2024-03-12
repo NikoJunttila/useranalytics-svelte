@@ -247,7 +247,7 @@
   <select
     name="fetch"
     id="fetchdays"
-    class="my-5 bg-neutral outline outline-2 outline-accent focus:outline-accent-focus rounded-md"
+    class="my-5 outline outline-2 outline-accent focus:outline-accent-focus rounded-md"
     bind:value={fetchValue}
     on:change={getDaysData}
   >

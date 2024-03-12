@@ -206,11 +206,11 @@ let sums = sumStatsValues(dailyStats);
         <div class="stat-value">{total.TotalUnique}</div>
         {#if total.unique > 0}
           <div class="stat-desc text-green-500">
-            change from last month: {Math.floor(total.unique)}%
+            {$t("domain.change")}: {Math.floor(total.unique)}%
           </div>
         {:else if total.unique < 0}
           <div class="stat-desc text-red-600">
-            change from last month: {Math.floor(total.unique)}%
+            {$t("domain.change")}: {Math.floor(total.unique)}%
           </div>
         {/if}
       </div>
@@ -219,7 +219,7 @@ let sums = sumStatsValues(dailyStats);
   <select
     name="fetch"
     id="fetchdays"
-    class="my-5 bg-neutral outline outline-2 outline-accent focus:outline-accent-focus rounded-md"
+    class="my-5 outline outline-2 outline-accent focus:outline-accent-focus rounded-md"
     bind:value={fetchValue}
     on:change={getDaysData}
   >
