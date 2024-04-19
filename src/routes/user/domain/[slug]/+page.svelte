@@ -48,13 +48,11 @@
 let sums = sumStatsValues(dailyStats);
   async function getDaysData() {
     try {
-      loading.set(true)
       const res = await fetch(`${endpoint}/v1/visits/${fetchValue}`, {
         method: "POST",
         body: JSON.stringify({ domain_id: slug }),
       });
       if (!res.ok) {
-        notifications.danger("error fetching data", 3000);
         return;
       }
       const check = await res.json();
