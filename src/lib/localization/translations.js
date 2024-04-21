@@ -24,7 +24,7 @@ export default {
       "domain.from":"Visits coming from",
       "domain.fromAvg":"avg visit",
       "domain.browser":"Browsers",
-      "domain.os":"Operation systems",
+      "domain.os":"Operating systems",
       "domain.device":"Devices",
       "domain.pagesVisited":"Pages visited",
       "domain.change":"Change from last month",

@@ -53,6 +53,7 @@ let sums = sumStatsValues(dailyStats);
         body: JSON.stringify({ domain_id: slug }),
       });
       if (!res.ok) {
+        console.error("error fetching data")
         return;
       }
       const check = await res.json();
