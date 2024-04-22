@@ -353,7 +353,11 @@
       <p>no data for pages visited</p>
     {/if}
   {/if}
-  <Htmlcode id="e325ccdb-284b-4f74-bfcd-c014c300a3c9" />
+  {#await data.streamed.total}
+  Loading...
+{:then total} 
+<Htmlcode id={total.ID} /> 
+{/await}
 </div>
 
 <style>
