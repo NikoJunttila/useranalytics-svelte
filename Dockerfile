@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 node:22-alpine AS builder
+FROM --platform=linux/arm64 node:22-bookworm-slim AS builder
 WORKDIR /app
 COPY package*.json ./
 
@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 RUN npm prune --production
 
-FROM --platform=linux/arm64 node:22-alpine
+FROM --platform=linux/arm64 node:22-bookworm-slim
 WORKDIR /app
 
 # Copy built files and dependencies
