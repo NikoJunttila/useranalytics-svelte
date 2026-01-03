@@ -7,11 +7,12 @@ services:
     ports:
       - "3000:3000"
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "host.docker.internal:gateway"
+      - "host.containers.internal:gateway"
     environment:
       NODE_ENV: production
       PUBLIC_ENDPOINT: "http://localhost:8000"
-      PUBLIC_INTERNAL_ENDPOINT: "http://host.docker.internal:8000"
+      PUBLIC_INTERNAL_ENDPOINT: "http://host.containers.internal:8000"
       PUBLIC_EXAMPLE_ID: "083a1865-fd3a-425c-996c-54fa028b268c"
       PUBLIC_JS_DELIVR_URL: "https://cdn.jsdelivr.net/gh/NikoJunttila/userAnalytics@main/javascript/tracker.js"
     restart: unless-stopped
