@@ -94,7 +94,7 @@
   });
 
   function setupWebSocket() {
-    socket = new WebSocket("wss://analytics-derp.koyeb.app/v1/wsCount");
+    socket = new WebSocket("wss://backend.pi.junttila.dev/v1/wsCount");
     //socket = new WebSocket("ws://localhost:8000/v1/wsCount");
 
     socket.onopen = () => {
@@ -354,10 +354,10 @@
     {/if}
   {/if}
   {#await data.streamed.total}
-  Loading...
-{:then total} 
-<Htmlcode id={total.ID} /> 
-{/await}
+    Loading...
+  {:then total}
+    <Htmlcode id={total.ID} />
+  {/await}
 </div>
 
 <style>
