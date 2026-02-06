@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
   import { onMount } from "svelte";
-  import {endpoint} from "$lib/js/endpoints"
+  import { endpoint } from "$lib/js/endpoints";
   import { page } from "$app/stores";
   import { notifications } from "$lib/stores/notifications";
   import { loading } from "$lib/stores/loader.js";
@@ -27,25 +27,25 @@
   let pages;
   let bounceRate = 0;
   function sumStatsValues(statsArray) {
-  // Initialize variables to hold the sums
-  let sumDomainCount = 0;
-  let sumNewVisitorCount = 0;
-  let sumAvgVisitDuration = 0;
+    // Initialize variables to hold the sums
+    let sumDomainCount = 0;
+    let sumNewVisitorCount = 0;
+    let sumAvgVisitDuration = 0;
 
-  // Loop through the array and add up the values
-  for (let i = 0; i < statsArray.length; i++) {
-    sumDomainCount += statsArray[i].DomainCount;
-    sumNewVisitorCount += statsArray[i].NewVisitorCount;
-    sumAvgVisitDuration += statsArray[i].AvgVisitDuration;
+    // Loop through the array and add up the values
+    for (let i = 0; i < statsArray.length; i++) {
+      sumDomainCount += statsArray[i].DomainCount;
+      sumNewVisitorCount += statsArray[i].NewVisitorCount;
+      sumAvgVisitDuration += statsArray[i].AvgVisitDuration.Float64;
+    }
+    sumAvgVisitDuration = sumAvgVisitDuration / statsArray.length;
+    return {
+      sumDomainCount,
+      sumNewVisitorCount,
+      sumAvgVisitDuration,
+    };
   }
-  sumAvgVisitDuration = sumAvgVisitDuration / statsArray.length
-  return {
-    sumDomainCount,
-    sumNewVisitorCount,
-    sumAvgVisitDuration ,
-  };
-}
-let sums = sumStatsValues(dailyStats);
+  let sums = sumStatsValues(dailyStats);
   async function getDaysData() {
     try {
       const res = await fetch(`${endpoint}/v1/visits/${fetchValue}`, {
@@ -53,14 +53,14 @@ let sums = sumStatsValues(dailyStats);
         body: JSON.stringify({ domain_id: slug }),
       });
       if (!res.ok) {
-        console.error("error fetching data")
+        console.error("error fetching data");
         return;
       }
       const check = await res.json();
-      loading.set(false)
-      if (!check.os){
+      loading.set(false);
+      if (!check.os) {
         notifications.warning("no stats yet for this page", 3000);
-        return
+        return;
       }
       os = check.os;
       os.sort(function (a, b) {
@@ -69,48 +69,36 @@ let sums = sumStatsValues(dailyStats);
       device = check.device;
       device.sort(function (a, b) {
         return b.Count - a.Count;
-      }); 
+      });
       browser = check.browser;
       browser.sort(function (a, b) {
         return b.Count - a.Count;
-      }); 
-      dailyStats = check.original
-       dailyStats.sort(function (a, b) {
+      });
+      dailyStats = check.original;
+      dailyStats.sort(function (a, b) {
         return b.Count - a.Count;
-      }); 
-      pages = check.pages
+      });
+      pages = check.pages;
       bounceRate = check.bounce;
       sums = sumStatsValues(dailyStats);
     } catch (err) {
       notifications.danger(err, 3000);
-      loading.set(false)
+      loading.set(false);
     }
   }
   onMount(() => {
-    loading.set(false)
+    loading.set(false);
     getDaysData();
   });
   let days = [7, 30, 90];
   let fetchValue = 30;
 </script>
-<style>
 
-  div.stat-value{
-    text-align: center;
-  }
-  p{
-    margin: 5px 0;
-  }
-  div.shadow{
-    border-radius: var(--rounded-box, 1rem/* 16px */);
-  }
-  
-</style>
 <svelte:head>
-    <title>Domain</title>
+  <title>Domain</title>
 </svelte:head>
 <div class=" flex flex-col justify-center items-center">
-  <a href="/user/dashboard" class="btn mt-2  bg-accent">
+  <a href="/user/dashboard" class="btn mt-2 bg-accent">
     <svg
       fill="#000000"
       height="20px"
@@ -155,7 +143,7 @@ let sums = sumStatsValues(dailyStats);
       <a class="text-blue-700" href={total.Url} target="_blank">{total.Name}</a>
       {$t("domain.stats")}
     </h1>
-<p class="mb-2 text-center">Domain id: {total.ID}</p>
+    <p class="mb-2 text-center">Domain id: {total.ID}</p>
     <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
       <div
         class="stat md:border-b-0 border-neutral border-b-2 border-solid place-items-center"
@@ -224,7 +212,7 @@ let sums = sumStatsValues(dailyStats);
   >
     {#each days as day}
       <option name="select" value={day}>
-     <!--    Last {day} days -->
+        <!--    Last {day} days -->
         {@html $t("select.days", { days: day })}
       </option>
     {/each}
@@ -247,7 +235,7 @@ let sums = sumStatsValues(dailyStats);
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">{$t("domain.pBounce")}</div>
-        <div class="stat-value">{bounceRate}%</div>
+        <div class="stat-value">{Math.floor(bounceRate)}%</div>
       </div>
     </div>
     <p>{$t("domain.from")}:</p>
@@ -264,8 +252,9 @@ let sums = sumStatsValues(dailyStats);
               >
             </div>
             <div class="stat-title text-center">
-              {$t("domain.fromAvg")}: <span class="text-2xl text-base-content font-bold"
-                >{from.AvgVisitDuration}s</span
+              {$t("domain.fromAvg")}:
+              <span class="text-2xl text-base-content font-bold"
+                >{from.AvgVisitDuration.Float64}s</span
               >
             </div>
           </div>
@@ -325,7 +314,20 @@ let sums = sumStatsValues(dailyStats);
   {/if}
   {#await data.streamed.total}
     Loading...
-  {:then total} 
-  <Htmlcode id={total.ID} /> 
+  {:then total}
+    <Htmlcode id={total.ID} />
   {/await}
 </div>
+
+<style>
+  div.stat-value {
+    text-align: center;
+  }
+  p {
+    margin: 5px 0;
+  }
+  div.shadow {
+    border-radius: var(--rounded-box, 1rem /* 16px */);
+  }
+</style>
+

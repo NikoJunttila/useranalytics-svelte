@@ -35,7 +35,7 @@
     for (let i = 0; i < statsArray.length; i++) {
       sumDomainCount += statsArray[i].DomainCount;
       sumNewVisitorCount += statsArray[i].NewVisitorCount;
-      sumAvgVisitDuration += statsArray[i].AvgVisitDuration;
+      sumAvgVisitDuration += statsArray[i].AvgVisitDuration.Float64;
     }
     sumAvgVisitDuration = sumAvgVisitDuration / statsArray.length;
     return {
@@ -81,6 +81,7 @@
       pages = check.pages;
       bounceRate = check.bounce;
       sums = sumStatsValues(dailyStats);
+      console.log(sums);
     } catch (err) {
       notifications.danger(err, 3000);
       loading.set(false);
@@ -182,7 +183,7 @@
     Loading...
   {:then total}
     <h1 class="text-2xl my-1">
-      <a class="text-blue-700" href={total.Url} target="_blank">{total.Name}</a>
+      <a class="text-blue-700" href={total.url} target="_blank">{total.name}</a>
       stats
     </h1>
     <div class="md:stats !bg-base-300 flex gap-2 flex-col shadow">
@@ -204,14 +205,14 @@
           >
         </div>
         <div class="stat-title">{$t("domain.totalV")}</div>
-        <div class="stat-value">{total.TotalVisits}</div>
-        {#if total.total > 0}
+        <div class="stat-value">{total.total_visits}</div>
+        {#if total.total_visits > 0}
           <div class="stat-desc text-green-500">
-            {$t("domain.change")}: {Math.floor(total.total)}%
+            {$t("domain.change")}: {Math.floor(total.total_visits)}%
           </div>
-        {:else if total.total < 0}
+        {:else if total.total_unique < 0}
           <div class="stat-desc text-red-600">
-            {$t("domain.change")}: {Math.floor(total.total)}%
+            {$t("domain.change")}: {Math.floor(total.total_unique)}%
           </div>
         {/if}
       </div>
@@ -231,14 +232,14 @@
           >
         </div>
         <div class="stat-title">{$t("domain.totalU")}</div>
-        <div class="stat-value">{total.TotalUnique}</div>
-        {#if total.unique > 0}
+        <div class="stat-value">{total.total_unique}</div>
+        {#if total.total_unique > 0}
           <div class="stat-desc text-green-500">
-            {$t("domain.change")}: {Math.floor(total.unique)}%
+            {$t("domain.change")}: {Math.floor(total.total_unique)}%
           </div>
-        {:else if total.unique < 0}
+        {:else if total.total_unique < 0}
           <div class="stat-desc text-red-600">
-            {$t("domain.change")}: {Math.floor(total.unique)}%
+            {$t("domain.change")}: {Math.floor(total.total_unique)}%
           </div>
         {/if}
       </div>
@@ -272,11 +273,17 @@
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">{$t("domain.pAvg")}</div>
-        <div class="stat-value">{Math.floor(sums.sumAvgVisitDuration)}s</div>
+        <div class="stat-value">
+          {#if sums.sumAvgVisitDuration}
+            {Math.floor(sums.sumAvgVisitDuration)}s
+          {:else}
+            0s
+          {/if}
+        </div>
       </div>
       <div class="stat place-items-center">
         <div class="stat-title">{$t("domain.pBounce")}</div>
-        <div class="stat-value">{bounceRate}%</div>
+        <div class="stat-value">{Math.floor(bounceRate)}%</div>
       </div>
     </div>
     <p>{$t("domain.from")}:</p>
@@ -295,8 +302,8 @@
             <div class="stat-title text-center">
               {$t("domain.fromAvg")}:
               <span class="text-2xl text-base-content font-bold"
-                >{from.AvgVisitDuration}s</span
-              >
+                >{Math.floor(from.AvgVisitDuration.Float64)}s
+              </span>
             </div>
           </div>
         {/each}

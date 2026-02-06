@@ -16,8 +16,9 @@ export async function load({ setHeaders }) {
       setHeaders({ "Cache-Control": cacheControl });
     }
     const total = await res.json();
+    console.log(total)
     return {
-      streamed : {
+      streamed: {
         total: total
       }
     };
