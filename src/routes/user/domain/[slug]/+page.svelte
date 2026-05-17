@@ -248,13 +248,13 @@
             <div class="stat-title text-center">
               {from.Visitfrom}:
               <span class="text-2xl text-base-content font-bold"
-                >{from.Count}</span
+                >{Math.floor(from.Count)}</span
               >
             </div>
             <div class="stat-title text-center">
               {$t("domain.fromAvg")}:
               <span class="text-2xl text-base-content font-bold"
-                >{from.AvgVisitDuration.Float64}s</span
+                >{Math.floor(from.AvgVisitDuration.Float64)}s</span
               >
             </div>
           </div>
@@ -330,4 +330,3 @@
     border-radius: var(--rounded-box, 1rem /* 16px */);
   }
 </style>
-
